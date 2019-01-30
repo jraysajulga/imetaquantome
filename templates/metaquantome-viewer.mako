@@ -35,6 +35,7 @@
     </head>
 <html>
     <div id="myDiv"></div>
+    <div id="heatMap"></div>
 </html>
 
 <script>

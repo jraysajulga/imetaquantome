@@ -1,6 +1,6 @@
 <?xml version="0.1" encoding="UTF-8"?>
 <!DOCTYPE visualization SYSTEM "../../visualization.dtd">
-<visualization name="Metaquantome">
+<visualization name="Metaquantome Viewer">
     <data_sources>
         <data_source>
             <model_class>HistoryDatasetAssociation</model_class>
@@ -10,5 +10,5 @@
     <params>
         <param type="dataset" var_name_in_template="hda" required="true">dataset_id</param>
     </params>
-    <template>metaquantome.mako</template>
+    <template>metaquantome-viewer.mako</template>
 </visualization>
