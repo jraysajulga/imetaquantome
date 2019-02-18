@@ -140,8 +140,17 @@ define(["volcanoPlot"],
         },
 
         render : function(){
-            this.barPlot(this.data);
-            this.heatMap(this.data);
+            //this.barPlot(this.data);
+            //this.heatMap(this.data);
+            console.log(this.data);
+            if ("log2fc_NS_over_WS" in this.data){
+                new volcanoPlot({
+                    "IDs" : this.data.id,
+                    "name" : this.data.name,
+                    "category" : this.data.namespace,
+                    "x_vals" : this.data.log2fc_NS_over_WS,
+                    "y_vals" : this.data.corrected_p});
+            }
         }
     });
 });

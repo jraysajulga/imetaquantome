@@ -74,7 +74,8 @@
                 shim: {
                     "libs/underscore": { exports: "_" },
                     "libs/backbone": { exports: "Backbone" },
-                    "d3": { exports: "d3" }
+                    "d3": { exports: "d3" },
+                    "${app_root}/volcanoPlot" : {exports : "volcanoPlot"}
                 }
             });
     $(function() {
@@ -84,12 +85,9 @@
         });
     });
 
-    var yLabel = '-log<tspan baseline-shift="sub">10</tspan>False Discovery Rate',
-        xLabel = 'log<tspan baseline-shift="sub">2</tspan>Fold-change';
-
-    var volcanoPlot = volcanoPlot()
-        .xAxisLabel(xLabel)
-        .yAxisLabel(yLabel)
+    /*var volcanoPlot = volcanoPlot()
+        .xAxisLabel('-log<tspan baseline-shift="sub">10</tspan>False Discovery Rate',)
+        .yAxisLabel('log<tspan baseline-shift="sub">2</tspan>Fold-change')
         .foldChangeThreshold(2.0)
         .sampleID("gene")
         .xColumn("log2(fold_change)")
@@ -100,35 +98,5 @@
                 {"gene" : "TSC22D3", "log2(fold_change)" : -3.26657, "q_value" : 2.50041e-13},
                 {"gene" : "CRISPLD2", "log2(fold_change)" : -2.69648, "q_value" : 6.9242e-13},
                 {"gene" : "PER1", "log2(fold_change)" : -3.20034, "q_value" : 3.64345e-12}]])
-        .call(volcanoPlot);
-
-    /*d3.select('#chart')
-        .data([{"gene" : "C13orf15", "log2(fold_change)" : -3.26837, "avg_weight" : 2.50041e-13},
-                {"gene" : "TSC22D3", "log2(fold_change)" : -3.26657, "avg_weight" : 2.50041e-13},
-                {"gene" : "CRISPLD2", "log2(fold_change)" : -2.69648, "avg_weight" : 6.9242e-13},
-                {"gene" : "PER1", "log2(fold_change)" : -3.20034, "avg_weight" : 3.64345e-12}])
         .call(volcanoPlot);*/
-
-    /*d3.tsv(file, parser, function(error, data){
-        if (error) console.log(error);
-
-        d3.select('#chart')
-            .data([data])
-            .call(volcanoPlot);
-    });*/
-
-    // row parser to convert key values into numbers if possible
-    function parser(d) {
-        for (var key in d) {
-            if (d.hasOwnProperty(key)) {
-                d[key] = numberParser(d[key]);
-            }
-        }
-        return d;
-    }
-
-    // function to turn string into number if possible
-    function numberParser(value){
-        return (+value) ? +value : value;
-    }
 </script>
