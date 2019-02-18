@@ -7,7 +7,28 @@ define([''],
                         {"gene" : "TSC22D3", "log2(fold_change)" : -3.26657, "q_value" : 2.50041e-13},
                         {"gene" : "CRISPLD2", "log2(fold_change)" : -2.69648, "q_value" : 6.9242e-13},
                         {"gene" : "PER1", "log2(fold_change)" : -3.20034, "q_value" : 3.64345e-12}]);*/
-            this.render(this.processData(data));
+            this.data = this.processData(data);
+            $('body').append("<button id='separate'>Separate GO terms into three categories?</button>");
+            this.render('volcano-plot', this.data);
+            view = this;
+            document.getElementById("separate").addEventListener("click", function(){
+                view.renderThreePlots();
+            })
+        },
+
+        renderThreePlots : function(){
+            go_bp_data = this.data.filter(function(go_term){
+                return go_term.category == "biological_process";
+            });
+            go_cc_data = this.data.filter(function(go_term){
+                return go_term.category == "cellular_component";
+            });
+            go_mf_data = this.data.filter(function(go_term){
+                return go_term.category == "molecular_function";
+            });
+            this.render("go-bp-plot", go_bp_data);
+            this.render("go-cc-plot", go_cc_data);
+            this.render("go-mf-plot", go_mf_data);
         },
 
         processData : function(data){
@@ -28,7 +49,8 @@ define([''],
         },
 
 
-        render : function(data){
+        render : function(id, data){
+            $("body").append("<div id='" + id + "''></div>")
 
             function volcanoPlot() {
                 var width = 960,
@@ -322,7 +344,7 @@ define([''],
                 .xColumn("log2(fold_change)")
                 .yColumn("q_value");
 
-            d3.select('#chart')
+            d3.select('#' + id)
                 .data([data])
                 .call(volcanoPlot);
         }
