@@ -1,8 +1,8 @@
 /**
  * Main application class.
  */
-define([],
-    function() {
+define(["volcanoPlot"],
+    function(volcanoPlot) {
     return Backbone.View.extend({
         
         el : $('#container'),
