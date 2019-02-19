@@ -1,44 +1,47 @@
 /**
  * Main application class.
  */
-define(["volcanoPlot"],
-    function(volcanoPlot) {
+define(["views/volcanoPlot", "views/table", "models/data"],
+    function(volcanoPlot, dataTable, dataModel) {
     return Backbone.View.extend({
         
-        el : $('#container'),
+        //el : $('#container'),
+
+        id : 'container',
 
         initialize: function(config){
-            var ID = config.dataset_id;
-            this.loadDataset(ID);
+            this.dataset_id = config.dataset_id;
+            this.loadDataset();
             this.sampCols = {"NS": ["X737NS", "X852NS", "X867NS"],
                              "WS": ["X737WS", "X852WS", "X867WS"]}
+            this.headers = [];
         },
 
 
         array2dict: function(array){
-            var headers = array.shift();
             var row;
             var dict = {};
             for (var i = 0; i < array.length; i++){
                 row = array[i];
                 for (var j = 0; j < row.length; j++){
-                    if (headers[j] in dict){
-                        dict[headers[j]].push(row[j]);
+                    if (this.headers[j] in dict){
+                        dict[this.headers[j]].push(row[j]);
                     } else{
-                        dict[headers[j]] = [row[j]];
+                        dict[this.headers[j]] = [row[j]];
                     }
                 }
             }
             return dict;
         },
 
-        loadDataset : function(ID){
+        loadDataset : function(){
             app = this;
-            var xhr = jQuery.getJSON('/api/datasets/' + ID, {
+            var xhr = jQuery.getJSON('/api/datasets/' + this.dataset_id, {
                         data_type : 'raw_data',
                         provider : 'column'
                     });
             xhr.done(function(response){
+                app.headers = response.data.shift();
                 app.data = app.array2dict(response.data);
                 app.render();
             });
@@ -142,7 +145,6 @@ define(["volcanoPlot"],
         render : function(){
             //this.barPlot(this.data);
             //this.heatMap(this.data);
-            console.log(this.data);
             if ("log2fc_NS_over_WS" in this.data){
                 new volcanoPlot({
                     "IDs" : this.data.id,
@@ -151,6 +153,11 @@ define(["volcanoPlot"],
                     "x_vals" : this.data.log2fc_NS_over_WS,
                     "y_vals" : this.data.corrected_p});
             }
+            var table = new dataTable({dataset_id : this.dataset_id,
+                                        headers : this.headers,
+                                        data : this.data});
+            //this.$el.append(table.el);
+            table.render();
         }
     });
 });

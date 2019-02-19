@@ -1,5 +1,27 @@
+:root {
+    --highlight-color: #e6f2ff; /* Light blue */
+    --primary-color: #38537f; /* Navy blue */
+    --secondary-color:#C4B08D; /* Rust gold */
+    --tertiary-color: #62A3C3; /* Light blue*/
+    --quarternary-color:#A1B3C1; /* Steel blue */
+    --galaxy1:#EBD9B1;
+    --galaxy2:#DAB870;
+    --height: calc(100vh - 50px);
+    --mouseover: #CDD3EA;
+    --selected: #3879D9;
+    --light-yellow: #3879D9;
+}
+
 body {
     font-family: 'Noto Sans', sans-serif;
+}
+
+.selected {
+    background-color: red;
+}
+
+table.dataTable tbody tr.selected{
+    background-color:var(--highlight-color));
 }
 
 .axis path,

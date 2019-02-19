@@ -22,12 +22,13 @@
         <link rel="stylesheet" href="static/css/index.css">
         <script src="https://d3js.org/d3.v5.min.js"></script>
 
-        <script src="static/js/volcanoPlot.js"></script>
-
         <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 
         ${h.js( 'libs/jquery/jquery',
                 'libs/jquery/jquery-ui')}
+
+        <link rel="stylesheet" type="text/css" href="static/js/lib/DataTables/datatables.min.css"/>
+        <script type="text/javascript" src="static/js/lib/DataTables/datatables.min.js"></script>
 
         ${h.js( 'libs/jquery/select2',
                 'libs/bootstrap-tour',
@@ -38,9 +39,9 @@
         <!--'libs/d3',-->
     </head>
 <html>
-    <button id="resetBtn">Reset</button>
+    <!--<button id="resetBtn">Reset</button>-->
     <div id="chart"></div>
-
+    <table id="data-table"><thead><tr><th>1</th><th>2</th></tr></thead></table>
     <div id="myDiv"></div>
     <div id="heatMap"></div>
 </html>
@@ -68,14 +69,12 @@
                 paths: {
                     "plugin"        : "",
                     "d3"            : "libs/d3",
-                    "repository"    : "${repository_root}",
-                    "volcanoPlot" : "volcanoPlot"
+                    "repository"    : "${repository_root}"
                 },
                 shim: {
                     "libs/underscore": { exports: "_" },
                     "libs/backbone": { exports: "Backbone" },
-                    "d3": { exports: "d3" },
-                    "${app_root}/volcanoPlot" : {exports : "volcanoPlot"}
+                    "d3": { exports: "d3" }
                 }
             });
     $(function() {
