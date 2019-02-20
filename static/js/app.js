@@ -11,48 +11,9 @@ define(["views/volcanoPlot", "views/table", "models/data"],
 
         initialize: function(config){
             this.model = new Dataset(config);
-            //this.model.on("data", view.render(), this);
-            this.model.on("change:data", function(model){
-                console.log("Detected data via data model. Data: " + model.get("data"));
-            });
-            this.testingButtons();
-            //this.model.on("change:data", this.render(), this);
-        },
-
-        testingButtons : function(){
             var view = this;
-            var button_id = "model_updateA"
-            $('body').append("<button id='" + button_id + "'>" + button_id + "</button>");
-            document.getElementById(button_id).addEventListener("click", function(){
-                view.updateModel("model_updateA");
-            })
-            var button_id = "model_updateB"
-            $('body').append("<button id='" + button_id + "'>" + button_id + "</button>");
-            document.getElementById(button_id).addEventListener("click", function(){
-                view.updateModel("model_updateB");
-            })
-            
-            var button_id = "model_listen"
-            $('body').append("<button id='" + button_id + "'>" + button_id + "</button>");
-            document.getElementById(button_id).addEventListener("click", function(){
-                view.listenToModel();
-            })
+            this.model.on("change:data", function(){ view.render() });
         },
-
-        updateModel : function(data){
-            console.log("updating model to " + data);
-            this.model.set("data", data);
-        },
-        listenToModel : function(){
-            console.log("Added app listener to model");
-            this.model.on("change:data", this.changed());
-        },
-        changed : function(){
-            console.log("Detected data via app view. Data: " + this.model.get("data"));
-            console.log("Changed array: " + this.model.changed);
-            console.log(this.model);
-        },
-
 
         barPlot : function(data){
             var taxa = data.taxon_name;
@@ -152,10 +113,6 @@ define(["views/volcanoPlot", "views/table", "models/data"],
         render : function(){
             //this.barPlot(this.data);
             //this.heatMap(this.data);
-            console.log("Triggered");
-            console.log(this.model);
-            console.log(this.model.changed);
-            console.log(this.model.get("data"));
             if ("log2fc_NS_over_WS" in this.model.get("data")){
                 new volcanoPlot({
                     "IDs" : this.data.id,
