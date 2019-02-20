@@ -1,13 +1,11 @@
 /**
  * Main application class.
  */
-define(["views/volcanoPlot", "views/table", "models/data"],
-    function(volcanoPlot, dataTable, Dataset) {
+define(["views/volcanoPlot", "views/table", "models/data", "views/barPlot"],
+    function(volcanoPlot, dataTable, Dataset, BarPlot) {
     return Backbone.View.extend({
-        
-        //el : $('#container'),
 
-        id : 'container',
+        id : "container",
 
         initialize: function(config){
             this.model = new Dataset(config);
@@ -111,7 +109,10 @@ define(["views/volcanoPlot", "views/table", "models/data"],
         },
 
         render : function(){
-            //this.barPlot(this.data);
+            //this.barPlot(this.model.get("data"));
+            var barPlot = new BarPlot({model : this.model});
+            this.$el.html(barPlot.el);
+            barPlot.render();
             //this.heatMap(this.data);
             if ("log2fc_NS_over_WS" in this.model.get("data")){
                 new volcanoPlot({

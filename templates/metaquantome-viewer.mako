@@ -38,13 +38,13 @@
         ${h.css( 'base', 'jquery-ui/smoothness/jquery-ui' )}
         <!--'libs/d3',-->
     </head>
-<html>
+<body>
     <!--<button id="resetBtn">Reset</button>-->
     <div id="chart"></div>
-    <table id="data-table"><thead><tr><th>1</th><th>2</th></tr></thead></table>
+    <table id="data-table"></table>
     <div id="myDiv"></div>
     <div id="heatMap"></div>
-</html>
+</body>
 
 <script>
     var app_root = '${app_root}';
