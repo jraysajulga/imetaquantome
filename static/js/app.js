@@ -12,40 +12,45 @@ define(["views/volcanoPlot", "views/table", "models/data"],
         initialize: function(config){
             this.model = new Dataset(config);
             //this.model.on("data", view.render(), this);
-            
+            this.model.on("change:data", function(model){
+                console.log("Detected data via data model. Data: " + model.get("data"));
+            });
             this.testingButtons();
             //this.model.on("change:data", this.render(), this);
         },
 
         testingButtons : function(){
             var view = this;
-            var button_id = "model_update"
+            var button_id = "model_updateA"
             $('body').append("<button id='" + button_id + "'>" + button_id + "</button>");
             document.getElementById(button_id).addEventListener("click", function(){
-                    console.log("Adding");
-                view.updateModel();
+                view.updateModel("model_updateA");
             })
+            var button_id = "model_updateB"
+            $('body').append("<button id='" + button_id + "'>" + button_id + "</button>");
+            document.getElementById(button_id).addEventListener("click", function(){
+                view.updateModel("model_updateB");
+            })
+            
             var button_id = "model_listen"
             $('body').append("<button id='" + button_id + "'>" + button_id + "</button>");
             document.getElementById(button_id).addEventListener("click", function(){
-                    console.log("Adding");
                 view.listenToModel();
             })
         },
 
-        updateModel : function(){
-            console.log("updating model");
-            this.model.set("data","ha;lsdkfj");
+        updateModel : function(data){
+            console.log("updating model to " + data);
+            this.model.set("data", data);
         },
         listenToModel : function(){
-            console.log("listening to model");
-            this.model.on("change:data", this.changed(), this);
+            console.log("Added app listener to model");
+            this.model.on("change:data", this.changed());
         },
         changed : function(){
-            console.log("triggered");
+            console.log("Detected data via app view. Data: " + this.model.get("data"));
+            console.log("Changed array: " + this.model.changed);
             console.log(this.model);
-            console.log(this.model.get("data"));
-            console.log(this.model.changed);
         },
 
 
