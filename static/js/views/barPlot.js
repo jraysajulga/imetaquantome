@@ -6,9 +6,7 @@ define([''],
 
         initialize: function(config){
             this.model = config.model;
-            this.colnames = {label : "taxon_name",
-                        group_1 : "NS_mean",
-                        group_2 : "WS_mean"};
+            this.colnames = config.colnames;
         },
 
         render : function(){
