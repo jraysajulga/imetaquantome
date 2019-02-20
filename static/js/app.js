@@ -2,7 +2,7 @@
  * Main application class.
  */
 define(["views/volcanoPlot", "views/table", "models/data"],
-    function(volcanoPlot, dataTable, dataModel) {
+    function(volcanoPlot, dataTable, Dataset) {
     return Backbone.View.extend({
         
         //el : $('#container'),
@@ -10,42 +10,44 @@ define(["views/volcanoPlot", "views/table", "models/data"],
         id : 'container',
 
         initialize: function(config){
-            this.dataset_id = config.dataset_id;
-            this.loadDataset();
-            this.sampCols = {"NS": ["X737NS", "X852NS", "X867NS"],
-                             "WS": ["X737WS", "X852WS", "X867WS"]}
-            this.headers = [];
+            this.model = new Dataset(config);
+            //this.model.on("data", view.render(), this);
+            
+            this.testingButtons();
+            //this.model.on("change:data", this.render(), this);
         },
 
-
-        array2dict: function(array){
-            var row;
-            var dict = {};
-            for (var i = 0; i < array.length; i++){
-                row = array[i];
-                for (var j = 0; j < row.length; j++){
-                    if (this.headers[j] in dict){
-                        dict[this.headers[j]].push(row[j]);
-                    } else{
-                        dict[this.headers[j]] = [row[j]];
-                    }
-                }
-            }
-            return dict;
+        testingButtons : function(){
+            var view = this;
+            var button_id = "model_update"
+            $('body').append("<button id='" + button_id + "'>" + button_id + "</button>");
+            document.getElementById(button_id).addEventListener("click", function(){
+                    console.log("Adding");
+                view.updateModel();
+            })
+            var button_id = "model_listen"
+            $('body').append("<button id='" + button_id + "'>" + button_id + "</button>");
+            document.getElementById(button_id).addEventListener("click", function(){
+                    console.log("Adding");
+                view.listenToModel();
+            })
         },
 
-        loadDataset : function(){
-            app = this;
-            var xhr = jQuery.getJSON('/api/datasets/' + this.dataset_id, {
-                        data_type : 'raw_data',
-                        provider : 'column'
-                    });
-            xhr.done(function(response){
-                app.headers = response.data.shift();
-                app.data = app.array2dict(response.data);
-                app.render();
-            });
+        updateModel : function(){
+            console.log("updating model");
+            this.model.set("data","ha;lsdkfj");
         },
+        listenToModel : function(){
+            console.log("listening to model");
+            this.model.on("change:data", this.changed(), this);
+        },
+        changed : function(){
+            console.log("triggered");
+            console.log(this.model);
+            console.log(this.model.get("data"));
+            console.log(this.model.changed);
+        },
+
 
         barPlot : function(data){
             var taxa = data.taxon_name;
@@ -145,7 +147,11 @@ define(["views/volcanoPlot", "views/table", "models/data"],
         render : function(){
             //this.barPlot(this.data);
             //this.heatMap(this.data);
-            if ("log2fc_NS_over_WS" in this.data){
+            console.log("Triggered");
+            console.log(this.model);
+            console.log(this.model.changed);
+            console.log(this.model.get("data"));
+            if ("log2fc_NS_over_WS" in this.model.get("data")){
                 new volcanoPlot({
                     "IDs" : this.data.id,
                     "name" : this.data.name,
@@ -154,8 +160,8 @@ define(["views/volcanoPlot", "views/table", "models/data"],
                     "y_vals" : this.data.corrected_p});
             }
             var table = new dataTable({dataset_id : this.dataset_id,
-                                        headers : this.headers,
-                                        data : this.data});
+                                        headers : this.model.get("headers"),
+                                        data : this.model.get("data")});
             //this.$el.append(table.el);
             table.render();
         }
