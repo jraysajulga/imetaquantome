@@ -192,11 +192,10 @@ table.dataTable tbody tr.selected{
 /* Change color of dropdown links on hover */
 .option-dropdown-content a:hover {background-color: #ddd;}
 
-/* Show the dropdown menu on hover */
-.option-dropdown:hover .option-dropdown-content {display: block;}
+/* Change color of dropdown links on hover */
+.option-dropdown-content {background-color: #ddd}
 
 /* Change the background color of the dropdown button when the dropdown content is shown */
 .option-dropdown:hover .dropbtn {background-color: #3e8e41;}
-
 
 
