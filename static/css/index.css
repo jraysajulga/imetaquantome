@@ -12,6 +12,10 @@
     --light-yellow: #3879D9;
 }
 
+
+
+
+
 body {
     font-family: 'Noto Sans', sans-serif;
 }
@@ -23,6 +27,23 @@ body {
 table.dataTable tbody tr.selected{
     background-color:var(--highlight-color));
 }
+
+
+/* Charts */
+.chart {
+    background-color: #ffffff;
+    border: 1px solid #111;
+    float:left;
+    width:100%;
+}
+
+.js-plotly-plot {
+    float: left;
+}
+
+
+
+/* Volcano Plot */
 
 .axis path,
 .tick line,
@@ -66,7 +87,6 @@ table.dataTable tbody tr.selected{
 
 .dot.sigfold {
     fill: green;
-
 }
 
 .zoom {
@@ -124,4 +144,59 @@ table.dataTable tbody tr.selected{
     color: #000;
     cursor: pointer;
 }
+
+
+
+
+
+
+/* Dropdown CSS */
+/* Dropdown Button */
+.option-dropbtn {
+  background-color: #b2b2b2;
+  color: white;
+  padding: 16px;
+  font-size: 16px;
+  border: none;
+}
+
+/* The container <div> - needed to position the dropdown content */
+.option-dropdown {
+    min-width:160px;
+  position: relative;
+  display: inline-block;
+  border: 1px solid #000000;
+  border-radius: 2px;
+  padding: 1px;
+  margin: 2px;
+}
+
+/* Dropdown Content (Hidden by Default) */
+.option-dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f1f1f1;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+/* Links inside the dropdown */
+.option-dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+/* Change color of dropdown links on hover */
+.option-dropdown-content a:hover {background-color: #ddd;}
+
+/* Show the dropdown menu on hover */
+.option-dropdown:hover .option-dropdown-content {display: block;}
+
+/* Change the background color of the dropdown button when the dropdown content is shown */
+.option-dropdown:hover .dropbtn {background-color: #3e8e41;}
+
+
 

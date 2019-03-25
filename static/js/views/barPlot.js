@@ -1,12 +1,17 @@
-define([''],
-    function() {
+define(['views/options'],
+    function(OptionTable) {
     return Backbone.View.extend({
 
-        id : "bar-plot",
+        className : "chart",
 
         initialize: function(config){
+            this.id = config.id;
             this.model = config.model;
             this.colnames = config.colnames;
+
+            // Adds options table and chart divs
+            this.$el.html(new OptionTable({model : this.model}).el);
+            this.$el.append($("<div>", {id : this.id + "-plotly"}));
         },
 
         render : function(){
@@ -35,7 +40,7 @@ define([''],
             var data = [NS_data, WS_data];
             var layout = {barmode: 'group'};
 
-            Plotly.newPlot(this.id, data, layout);
+            Plotly.newPlot(this.id + "-plotly", data, layout);
         },
 
     });

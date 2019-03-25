@@ -40,10 +40,7 @@
     </head>
 <body>
     <!--<button id="resetBtn">Reset</button>-->
-    <div id="chart"></div>
-    <table id="data-table"></table>
-    <div id="myDiv"></div>
-    <div id="heatMap"></div>
+    <!--<table id="data-table"></table>-->
 </body>
 
 <script>

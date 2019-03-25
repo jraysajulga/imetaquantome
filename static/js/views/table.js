@@ -2,22 +2,25 @@ define([''],
     function() {
     return Backbone.View.extend({
 
+        tagName : "table",
+
         id : "data-table",
 
         initialize: function(config){
-            //$('body').append("<div")
-            //console.log(config.data);
-            this.dataset_id = config.datset_id;
-            this.headers = config.headers;
-            console.log(this.headers);
+            this.model = config.model;
+            this.headers = this.model.get("headers");
+            
+        },
+
+        render : function() {
+            // Renders header HTML within table for datatable to load
             headerHTML = "<th>";
             for (var i = 0; i < this.headers.length; i++){
                 headerHTML = headerHTML + this.headers[i] + "</th><th>"
             }
-            $("#data-table").html("<thead><tr>" + headerHTML.slice(0,headerHTML.length - 4) + "</thead>");
-        },
+            this.$el.html("<thead><tr>" + headerHTML.slice(0,headerHTML.length - 4) + "</thead>");
 
-        render : function() {
+            // AJAX loaded Datatable initialization
             var view = this;
             $(document).ready(function() {
                 view.table = $("#" + view.id).DataTable( {

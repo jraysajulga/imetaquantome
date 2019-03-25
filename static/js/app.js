@@ -1,8 +1,8 @@
 /**
  * Main application class.
  */
-define(["views/volcanoPlot", "views/table", "models/data", "views/barPlot", "views/heatmap"],
-    function(volcanoPlot, dataTable, Dataset, BarPlot, HeatMap) {
+define(["views/volcanoPlot", "views/table", "models/data", "views/barPlot", "views/heatmap", "collections/plots"],
+    function(volcanoPlot, dataTable, Dataset, BarPlot, HeatMap, Plots) {
     return Backbone.View.extend({
 
         id : "container",
@@ -15,20 +15,27 @@ define(["views/volcanoPlot", "views/table", "models/data", "views/barPlot", "vie
 
         render : function(){
 
+            // Datatable
+            var table = new dataTable({dataset_id : this.dataset_id,
+                                        model : this.model});
+            this.$el.append(table.el);
+            table.render();
+
             // Taxonomy barplot
-            var barPlot = new BarPlot({model : this.model,
-                                    colnames: {label : "taxon_name",
-                                             group_1 : "NS_mean",
-                                             group_2 : "WS_mean"}});
-            this.$el.html(barPlot.el);
+            var barPlot = new BarPlot({id : "taxonomy-barplot",
+                                      model : this.model,
+                                      colnames: {label : "taxon_name",
+                                            group_1 : "NS_mean",
+                                            group_2 : "WS_mean"}});
+            this.$el.append(barPlot.el);
             barPlot.render();
 
             // Taxonomy heatmap
             var heatMap = new HeatMap({model : this.model});
-            this.$el.html(heatMap.el);
+            this.$el.append(heatMap.el);
             heatMap.render();
 
-            // Datatable
+            // Volcano Plot
             if ("log2fc_NS_over_WS" in this.model.get("data")){
                 new volcanoPlot({
                     "IDs" : this.data.id,
@@ -37,11 +44,8 @@ define(["views/volcanoPlot", "views/table", "models/data", "views/barPlot", "vie
                     "x_vals" : this.data.log2fc_NS_over_WS,
                     "y_vals" : this.data.corrected_p});
             }
-            var table = new dataTable({dataset_id : this.dataset_id,
-                                        headers : this.model.get("headers"),
-                                        data : this.model.get("data")});
-            //this.$el.append(table.el);
-            table.render();
+
+            
         }
     });
 });
