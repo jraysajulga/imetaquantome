@@ -58,7 +58,7 @@ define([''],
 
             // Iterate through dataset's headers and place within dropdown.
             var view = this;
-            var options = label == "type" ? ["heatmap", "barchart"] : this.headers;
+            var options = label == "Type" ? ["heatmap", "barchart"] : this.headers;
             for (var i = 0; i < options.length; i++){
                 dropdown_content.append($("<a>", {
                                         text : options[i],
