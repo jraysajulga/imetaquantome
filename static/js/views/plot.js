@@ -10,19 +10,12 @@ define(["views/options"],
             this.data = config.dataModel.get("data");
 
             this.type = this.model.get("type");
-            //this.plots = new PlotData();
-            //this.colnames = config.colnames;
 
             // Adds options table and chart divs
             this.$el.html(new OptionTable({model : this.model,
                                            headers : config.dataModel.get("headers")}).el);
             this.$el.append($("<div>", {id : this.id + "-plotly"}));
             
-            var view = this;
-            //$("<div>", {id : this.id + "-plotly",
-                //        class : "plot"}).appendTo(this.$el).ready(function(){
-              //view.render();
-            //})
             this.model.on("change:ready", this.render, this);
             this.model.on("change:values", this.render, this);
         },

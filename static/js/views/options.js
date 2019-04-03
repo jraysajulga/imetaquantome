@@ -8,22 +8,20 @@ define([''],
             this.model = config.model;
             this.headers = config.headers;
             this.addDropdowns();
-            this.model.on("change:values", this.addDropdowns, this);
+            this.clearDropdownsListener();
+            this.model.on("change:values change:type", this.addDropdowns, this);
         },
 
         addDropdowns : function(){
             var values = this.model.get("values");
-            this.$el.empty();
+            this.$el.html(this.dropdown("type", this.model.get("type")))
             for (value in values){
                 this.$el.append(this.dropdown(value, values[value]));
             }
         },
 
-        dropdown : function(label, value){
-            var dropdown = $("<div>", {class : "option-dropdown"})
-            var dropdown_content = $("<div>", {class : "option-dropdown-content"})
-
-            // CLose dropdown menus if user clicks outside
+        clearDropdownsListener : function(){
+            // Close dropdown menus if user clicks outside
             window.onclick = function(event) {
                 if (!event.target.matches('.option-dropbtn')) {
                     var dropdowns = document.getElementsByClassName("option-dropdown-content");
@@ -35,7 +33,11 @@ define([''],
                     }
                 }
             }
+        },
 
+        dropdown : function(label, value){
+            var dropdown = $("<div>", {class : "option-dropdown"})
+            var dropdown_content = $("<div>", {class : "option-dropdown-content"})
 
             var dropdown_header = $("<div>",
                 {class : "option-header",
@@ -56,14 +58,19 @@ define([''],
 
             // Iterate through dataset's headers and place within dropdown.
             var view = this;
-            for (var i = 0; i < this.headers.length; i++){
+            var options = label == "type" ? ["heatmap", "barchart"] : this.headers;
+            for (var i = 0; i < options.length; i++){
                 dropdown_content.append($("<a>", {
-                                        text : this.headers[i],
-                                        class : value == this.headers[i] ? "selected" : null,
+                                        text : options[i],
+                                        class : value == options[i] ? "selected" : null,
                                         click : function(){
-                                            var values = _.clone(view.model.get("values"));
-                                            values[label] = $( this ).html();
-                                            view.model.set("values", values);
+                                            if (label == "type") {
+                                                view.model.set("type", $(this).html());
+                                            } else {
+                                                var values = _.clone(view.model.get("values"));
+                                                values[label] = $(this).html();
+                                                view.model.set("values", values);
+                                            }
                                         }}));
             }
             dropdown.append(dropdown_header);
