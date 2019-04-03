@@ -34,6 +34,7 @@ define([''],
                                 //limit : 100000,
                                 //offset: 1}
                     },
+                    "scrollX" : true,
                     select : true
                 });
                 $("#" + view.id + " tbody").on("click", "td", function () {

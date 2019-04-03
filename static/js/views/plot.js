@@ -15,7 +15,8 @@ define(["views/options"],
             //this.colnames = config.colnames;
 
             // Adds options table and chart divs
-            this.$el.html(new OptionTable({model : this.model}).el);
+            this.$el.html(new OptionTable({model : this.model,
+                                           headers : config.dataModel.get("headers")}).el);
             this.$el.append($("<div>", {id : this.id + "-plotly"}));
             
             var view = this;

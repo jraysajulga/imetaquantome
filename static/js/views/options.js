@@ -6,19 +6,17 @@ define([''],
 
         initialize: function(config){
             this.model = config.model;
-            this.dropdown_label = null;
+            this.headers = config.headers;
             this.addDropdowns();
+            this.model.on("change:values", this.addDropdowns, this);
         },
 
         addDropdowns : function(){
             var values = this.model.get("values");
+            this.$el.empty();
             for (value in values){
                 this.$el.append(this.dropdown(value, values[value]));
             }
-        },
-
-        updateLabel : function(){
-            console.log("Updating label");
         },
 
         dropdown : function(label, value){
@@ -50,22 +48,22 @@ define([''],
                         .find(".option-dropdown-content");
                     content.toggle("show");
                 }});
-            this.dropdown_label = $("<div>",
+            dropdown_label = $("<div>",
                 {class : "option-label",
                  text : value});
             dropdown_header.append(dropdown_button);
-            dropdown_header.append(this.dropdown_label);
+            dropdown_header.append(dropdown_label);
 
             // Iterate through dataset's headers and place within dropdown.
-            var columns = this.model.get("headers");
             var view = this;
-            for (var i = 0; i < columns.length; i++){
+            for (var i = 0; i < this.headers.length; i++){
                 dropdown_content.append($("<a>", {
-                                        text : columns[i],
+                                        text : this.headers[i],
+                                        class : value == this.headers[i] ? "selected" : null,
                                         click : function(){
-                                            console.log($( this ).html());
-
-                                            //console.log($(this).parent().parent().find(".option-header").find(".option-label").html($( this ).html()));
+                                            var values = _.clone(view.model.get("values"));
+                                            values[label] = $( this ).html();
+                                            view.model.set("values", values);
                                         }}));
             }
             dropdown.append(dropdown_header);

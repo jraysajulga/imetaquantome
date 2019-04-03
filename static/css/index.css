@@ -21,7 +21,7 @@ body {
 }
 
 .selected {
-    background-color: red;
+    background-color: #b7fcff;
 }
 
 table.dataTable tbody tr.selected{
@@ -167,6 +167,7 @@ table.dataTable tbody tr.selected{
   text-align:left;
   background-color:#7caeff;
   padding:4px;
+  z-index:20;
 }
 
 /* Dropdown CSS */
@@ -211,9 +212,25 @@ table.dataTable tbody tr.selected{
   display: none;
   position: absolute;
   background-color: #f1f1f1;
-  min-width: 160px;
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
   z-index: 1;
+  overflow-y: scroll;
+  height:200px;
+  min-width:100%;
+  width:100%;
+  top:30px;
+}
+
+/* Always show scrollbar */
+::-webkit-scrollbar {
+  -webkit-appearance: none;
+  width: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 5px;
+  background-color: rgba(0,0,0,.5);
+  -webkit-box-shadow: 0 0 1px rgba(255,255,255,.5);
 }
 
 /* Links inside the dropdown */
@@ -225,7 +242,9 @@ table.dataTable tbody tr.selected{
 }
 
 /* Change color of dropdown links on hover */
-.option-dropdown-content a:hover {background-color: #ddd;}
+.option-dropdown-content a:hover {
+  background-color: #ffe8aa;
+}
 
 /* Change color of dropdown links on hover */
 .option-dropdown-content {background-color: #ddd}
@@ -233,4 +252,10 @@ table.dataTable tbody tr.selected{
 /* Change the background color of the dropdown button when the dropdown content is shown */
 .option-dropdown:hover .dropbtn {background-color: #3e8e41;}
 
+
+
+/* Datatable */
+#data-table {
+  background-color: #7caeff;
+}
 
