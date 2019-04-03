@@ -10,7 +10,6 @@ define(["views/options"],
             this.data = config.dataModel.get("data");
 
             this.type = this.model.get("type");
-            this.values = this.model.get("values");
             //this.plots = new PlotData();
             //this.colnames = config.colnames;
 
@@ -25,6 +24,7 @@ define(["views/options"],
               //view.render();
             //})
             this.model.on("change:ready", this.render, this);
+            this.model.on("change:values", this.render, this);
         },
 
         render : function(){
@@ -34,31 +34,32 @@ define(["views/options"],
         },
 
         renderBarChart : function(){
-            var label = this.data[this.values["Label"]];
-            var group_1 = this.data[this.values["Group 1"]];
-            var group_2 = this.data[this.values["Group 2"]];
-            
-            group_1 = group_1.map(function(e) {e = 2**e; return e; })
-            group_2 = group_2.map(function(e) {e = 2**e; return e; })
+          var values = this.model.get("values");
+          var label = this.data[values["Label"]];
+          var group_1 = this.data[values["Group 1"]];
+          var group_2 = this.data[values["Group 2"]];
+          
+          group_1 = group_1.map(function(e) {e = 2**e; return e; })
+          group_2 = group_2.map(function(e) {e = 2**e; return e; })
 
-            var NS_data = {
-              x: label,
-              y: group_1,
-              name: 'NS',
-              type: 'bar'
-            };
+          var NS_data = {
+            x: label,
+            y: group_1,
+            name: 'NS',
+            type: 'bar'
+          };
 
-            var WS_data = {
-              x: label,
-              y: group_2,
-              name: 'WS',
-              type: 'bar'
-            };
+          var WS_data = {
+            x: label,
+            y: group_2,
+            name: 'WS',
+            type: 'bar'
+          };
 
-            var data = [NS_data, WS_data];
-            var layout = {barmode: 'group'};
+          var data = [NS_data, WS_data];
+          var layout = {barmode: 'group'};
 
-            Plotly.newPlot(this.id + "-plotly", data, layout);
+          Plotly.newPlot(this.id + "-plotly", data, layout);
         },
 
     });
