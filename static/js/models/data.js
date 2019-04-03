@@ -45,8 +45,9 @@ define([''],
             // Will trigger any .on listeners
             var model = this;
             xhr.done(function(response){
-                model.set("headers", response.data.shift());
-                model.set("data", model.array2dict(response.data));
+                var data = response.data;
+                model.set("headers", data.shift());
+                model.set("data", model.array2dict(data));
             });
         }
 

@@ -10,6 +10,7 @@ define([''],
             this.table = null;
             this.model = config.model;
             this.plots = config.plots;
+            this.dataset_id = config.dataset_id;
             this.headers = this.model.get("headers");
             this.plots.on("change", this.addListener, this);
         },
@@ -23,16 +24,15 @@ define([''],
         },
 
         highlightColumns : function(){
-            console.log(this.headers);
             var highlights = this.plots.pluck("values");
             var highlight_plot;
             var index;
-            $($("#" + this.id).DataTable().cells().nodes()).removeClass("selected");
+            $(this.table.cells().nodes()).removeClass("selected");
             for (var i = 0; i < highlights.length; i++){
                 highlight_plot = highlights[i];
                 for (key in highlight_plot) {
                     index = this.headers.indexOf(highlight_plot[key])
-                    $($("#" + this.id).DataTable().column(index).nodes()).addClass("selected");
+                    $(this.table.column(index).nodes()).addClass("selected");
                 }
             }
         },
@@ -49,15 +49,14 @@ define([''],
             var view = this;
             $(document).ready(function() {
                 view.table = $("#" + view.id).DataTable( {
-                //$("#" + this.id).DataTable( {
                     "ajax": {
-                            "url": '/api/datasets/c6846140ddc4dc1d',// + view.dataset_id,
+                            "url": "/api/datasets/" + view.dataset_id,
                             contentType: 'application/json; charset=utf-8',
                             dataType : 'json',
                             "data": {data_type : 'raw_data',
-                                provider : 'column'}
+                                provider : 'column',
+                                offset : 1}
                                 //limit : 100000,
-                                //offset: 1}
                     },
                     // Misalignment fix derived from:
                     // https://stackoverflow.com/questions/13178039/datatables-fixed-headers-misaligned-with-columns-in-wide-tables

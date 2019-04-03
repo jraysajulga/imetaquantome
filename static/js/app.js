@@ -10,6 +10,7 @@ define(["views/volcanoPlot", "views/table", "models/data", "views/heatmap", "vie
         initialize: function(config){
             this.model = new Dataset(config);
             this.column_types = config.column_types;
+            this.dataset_id = config.dataset_id;
             var view = this;
             this.model.on("change:data", function(){ view.render() });
         },
