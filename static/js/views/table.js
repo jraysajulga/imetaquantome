@@ -34,13 +34,37 @@ define([''],
                                 //limit : 100000,
                                 //offset: 1}
                     },
-                    "scrollX" : true,
-                    select : true
+                    // Misalignment fix derived from:
+                    // https://stackoverflow.com/questions/13178039/datatables-fixed-headers-misaligned-with-columns-in-wide-tables
+                    select : true,
+                    "iDisplayLength": 10,
+                    "bPaginate": true,
+                    "iCookieDuration": 60,
+                    "bStateSave": false,
+                    "bAutoWidth": false,
+                    //true
+                    "bScrollAutoCss": true,
+                    "bProcessing": true,
+                    "bRetrieve": true,
+                    "bJQueryUI": true,
+                    //"sDom": 't',
+                    "sDom": '<"H"CTrf>t<"F"lip>',
+                    "aLengthMenu": [[25, 50, 100, -1], [25, 50, 100, "All"]],
+                    //"sScrollY": "500px",
+                    //"sScrollX": "100%",
+                    "sScrollXInner": "110%",
+                    "paging" : true,
+                    "fnInitComplete": function() {
+                        this.css("visibility", "visible");
+                    }
                 });
+                var tableId = view.id;
+                $('<div style="width: 100%; overflow: auto"></div>').append($('#' + tableId)).insertAfter($('#' + tableId + '_wrapper div').first());
                 $("#" + view.id + " tbody").on("click", "td", function () {
                     view.table.cells(".selected").deselect();
                     view.table.cell( this ).select();
                 })
+
             });
         }
     });

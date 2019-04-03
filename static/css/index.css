@@ -24,11 +24,6 @@ body {
     background-color: #b7fcff;
 }
 
-table.dataTable tbody tr.selected{
-    background-color:var(--highlight-color));
-}
-
-
 /* Charts */
 .chart-container {
     background-color: #ffffff;
@@ -255,7 +250,16 @@ table.dataTable tbody tr.selected{
 
 
 /* Datatable */
-#data-table {
+#data-table thead {
   background-color: #7caeff;
 }
+
+
+table.dataTable tbody tr.selected{
+    background-color:var(--highlight-color));
+}
+
+
+
+
 
