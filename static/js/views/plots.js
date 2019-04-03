@@ -6,7 +6,7 @@ define(["collections/plots", "models/plot", "views/plot"],
 
         initialize: function(config){
             this.model = config.model;
-            this.plots = new PlotData();
+            this.plots = config.plots;
             var view = this;
             this.plots.bind("add", function(){
               view.addPlot();
@@ -29,7 +29,6 @@ define(["collections/plots", "models/plot", "views/plot"],
         },
 
         addPlot : function(){
-          console.log("Adding plot!");
           //console.log(this.plots.at(-1));
           //console.log($(this.length));
           //console.log(this.plots.length);

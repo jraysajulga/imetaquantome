@@ -7,9 +7,34 @@ define([''],
         id : "data-table",
 
         initialize: function(config){
+            this.table = null;
             this.model = config.model;
+            this.plots = config.plots;
             this.headers = this.model.get("headers");
-            
+            this.plots.on("change", this.addListener, this);
+        },
+
+        addListener : function(){
+            var view = this;
+            this.plots.on("change:values", function(){
+                view.highlightColumns();
+            });
+            view.highlightColumns();
+        },
+
+        highlightColumns : function(){
+            console.log(this.headers);
+            var highlights = this.plots.pluck("values");
+            var highlight_plot;
+            var index;
+            $($("#" + this.id).DataTable().cells().nodes()).removeClass("selected");
+            for (var i = 0; i < highlights.length; i++){
+                highlight_plot = highlights[i];
+                for (key in highlight_plot) {
+                    index = this.headers.indexOf(highlight_plot[key])
+                    $($("#" + this.id).DataTable().column(index).nodes()).addClass("selected");
+                }
+            }
         },
 
         render : function() {
@@ -56,6 +81,7 @@ define([''],
                     "paging" : true,
                     "fnInitComplete": function() {
                         this.css("visibility", "visible");
+                        view.highlightColumns();
                     }
                 });
                 var tableId = view.id;
@@ -64,7 +90,6 @@ define([''],
                     view.table.cells(".selected").deselect();
                     view.table.cell( this ).select();
                 })
-
             });
         }
     });

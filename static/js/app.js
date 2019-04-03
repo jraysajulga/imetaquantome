@@ -1,8 +1,8 @@
 /**
  * Main application class.
  */
-define(["views/volcanoPlot", "views/table", "models/data", "views/heatmap", "views/plots"],
-    function(volcanoPlot, dataTable, Dataset, HeatMap, Visualizations) {
+define(["views/volcanoPlot", "views/table", "models/data", "views/heatmap", "views/plots", "collections/plots"],
+    function(volcanoPlot, dataTable, Dataset, HeatMap, Visualizations, PlotData) {
     return Backbone.View.extend({
 
         id : "container",
@@ -15,14 +15,18 @@ define(["views/volcanoPlot", "views/table", "models/data", "views/heatmap", "vie
 
         render : function(){
 
+            var plots = new PlotData();
+
             // Datatable
             var table = new dataTable({dataset_id : this.dataset_id,
-                                        model : this.model});
+                                        model : this.model,
+                                        plots : plots});
             this.$el.append(table.el);
             table.render();
 
             // View
-            visualizations = new Visualizations({model : this.model});
+            visualizations = new Visualizations({model : this.model,
+                                                 plots : plots});
             this.$el.append(visualizations.el);
             visualizations.renderReady();
 
