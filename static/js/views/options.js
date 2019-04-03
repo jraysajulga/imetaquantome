@@ -53,8 +53,8 @@ define([''],
             this.dropdown_label = $("<div>",
                 {class : "option-label",
                  text : value});
-            dropdown_header.append(this.dropdown_label);
             dropdown_header.append(dropdown_button);
+            dropdown_header.append(this.dropdown_label);
 
             // Iterate through dataset's headers and place within dropdown.
             var columns = this.model.get("headers");
