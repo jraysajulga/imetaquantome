@@ -41,7 +41,6 @@
 <body>
     <!--<button id="resetBtn">Reset</button>-->
     <!--<table id="data-table"></table>-->
-    <!--"${hdadict}"-->
 </body>
 
 <script>
@@ -77,7 +76,8 @@
             });
     $(function() {
         require( [ 'app' ], function( App ) {
-            var app = new App({dataset_id : '${hdadict["id"]}'});
+            var app = new App({dataset_id : '${hdadict["id"]}',
+                                column_types : "${[x.encode('utf-8') for x in hdadict['metadata_column_types']]}"});
             $('body').append(app.$el);
         });
     });
