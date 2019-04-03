@@ -14,7 +14,7 @@ define([''],
 
         addDropdowns : function(){
             var values = this.model.get("values");
-            this.$el.html(this.dropdown("type", this.model.get("type")))
+            this.$el.html(this.dropdown("Type", this.model.get("type")))
             for (value in values){
                 this.$el.append(this.dropdown(value, values[value]));
             }
@@ -64,7 +64,7 @@ define([''],
                                         text : options[i],
                                         class : value == options[i] ? "selected" : null,
                                         click : function(){
-                                            if (label == "type") {
+                                            if (label == "Type") {
                                                 view.model.set("type", $(this).html());
                                             } else {
                                                 var values = _.clone(view.model.get("values"));
