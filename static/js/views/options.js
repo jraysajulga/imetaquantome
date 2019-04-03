@@ -13,8 +13,7 @@ define([''],
         },
 
         dropdown : function(text){
-            var dropdown = $("<div>", {class : "option-dropdown",
-                                        text : text})
+            var dropdown = $("<div>", {class : "option-dropdown"})
             var dropdown_content = $("<div>", {class : "option-dropdown-content"})
 
             // CLose dropdown menus if user clicks outside
@@ -26,27 +25,40 @@ define([''],
                         if ($( shownDropdown ).css("display") == "block"){
                             $( shownDropdown ).toggle("show");
                         }
-                        //if (shownDropdown.classList.contains("show")) {
-                          //  shownDropdown.classList.remove("show");
-                        //}
                     }
                 }
             }
 
+
+            var dropdown_header = $("<div>",
+                {class : "option-header",
+                 text : text});
+            var dropdown_button = $("<button>", 
+                {class : "option-dropbtn",
+                 text : "▼",
+                click : function(){
+                    var content = $(this).parent().parent()
+                        .find(".option-dropdown-content");
+                    content.toggle("show");
+                }});
+            var dropdown_label = $("<div>",
+                {class : "option-label"});
+            dropdown_header.append(dropdown_label);
+            dropdown_header.append(dropdown_button);
+
             // Iterate through dataset's headers and place within dropdown.
             var columns = this.model.get("headers");
+            var view = this;
             for (var i = 0; i < columns.length; i++){
                 dropdown_content.append($("<a>", {
                                         text : columns[i],
                                         click : function(){
                                             console.log($( this ).html());
+                                            
+                                            //console.log($(this).parent().parent().find(".option-header").find(".option-label").html($( this ).html()));
                                         }}));
             }
-            dropdown.append($("<button>", {class : "option-dropbtn",
-                                       click : function(){
-                                        //$( this ).find(".option-dropdown-content").classList.toggle("show")
-                                        $(this).parent().find(".option-dropdown-content").toggle("show");
-                                       }}));
+            dropdown.append(dropdown_header);
             dropdown.append(dropdown_content);
             return dropdown
         },

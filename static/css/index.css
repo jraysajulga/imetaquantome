@@ -30,15 +30,28 @@ table.dataTable tbody tr.selected{
 
 
 /* Charts */
-.chart {
+.chart-container {
     background-color: #ffffff;
     border: 1px solid #111;
     float:left;
     width:100%;
+    height:100%;
+}
+
+.visualizations{
+    background-color: #ffffff;
+    border: 1px solid #111;
+    float:left;
+    width:100%;
+    height:100px;
 }
 
 .js-plotly-plot {
     float: left;
+}
+
+.plot {
+  float: left;
 }
 
 
@@ -158,6 +171,14 @@ table.dataTable tbody tr.selected{
   padding: 16px;
   font-size: 16px;
   border: none;
+  float:right;
+}
+
+.option-label {
+  float:right;
+  min-width:100px;
+  height:20px;
+  background-color:green;
 }
 
 /* The container <div> - needed to position the dropdown content */

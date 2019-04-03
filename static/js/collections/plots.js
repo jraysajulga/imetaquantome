@@ -1,8 +1,10 @@
-define([''],
-    function() {
+define(["models/plot"],
+    function(Plot) {
     return Backbone.Collection.extend({
 
         id : "data-table",
+
+        model : Plot,
 
         defaults : {
             headers : [],
@@ -13,8 +15,6 @@ define([''],
         },
 
         initialize: function(config){
-            this.dataset_id = config.dataset_id;
-            this.loadDataset();
         }
     });
 });

@@ -1,24 +1,41 @@
-define(['views/options'],
+define(["views/options"],
     function(OptionTable) {
     return Backbone.View.extend({
 
-        className : "chart",
+        className : "chart-container",
 
         initialize: function(config){
-            this.id = config.id;
+            this.id = this.model.cid;
             this.model = config.model;
-            this.colnames = config.colnames;
+            this.data = config.dataModel.get("data");
+
+            this.type = this.model.get("type");
+            this.values = this.model.get("values");
+            //this.plots = new PlotData();
+            //this.colnames = config.colnames;
 
             // Adds options table and chart divs
             this.$el.html(new OptionTable({model : this.model}).el);
             this.$el.append($("<div>", {id : this.id + "-plotly"}));
+            
+            var view = this;
+            //$("<div>", {id : this.id + "-plotly",
+                //        class : "plot"}).appendTo(this.$el).ready(function(){
+              //view.render();
+            //})
+            this.model.on("change:ready", this.render, this);
         },
 
         render : function(){
-            var data = this.model.get("data");
-            var label = data[this.colnames.label];
-            var group_1 = data[this.colnames.group_1];
-            var group_2 = data[this.colnames.group_2];
+          if (this.type == "barchart"){
+            this.renderBarChart();
+          }
+        },
+
+        renderBarChart : function(){
+            var label = this.data[this.values.label];
+            var group_1 = this.data[this.values.group_1];
+            var group_2 = this.data[this.values.group_2];
 
             group_1 = group_1.map(function(e) {e = 2**e; return e; })
             group_2 = group_2.map(function(e) {e = 2**e; return e; })
