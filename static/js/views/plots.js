@@ -22,7 +22,7 @@ define(["collections/plots", "models/plot", "views/plot"],
         surmiseDefaultValues : function(){
           var headers = this.model.get("headers");
           if (headers.includes("taxon_name") && headers.includes("NS_mean")){
-            return {label : "taxon_name", group_1 : "NS_mean", group_2 : "WS_mean"}
+            return {"Label" : "taxon_name", "Group 1" : "NS_mean", "Group 2" : "WS_mean"}
           } else {
             return false
           }
@@ -49,10 +49,8 @@ define(["collections/plots", "models/plot", "views/plot"],
           }
         },
 
-        render : function(){
-          //this.plot.render();
-          console.log("rendering from visualizations");
-          console.log(this.plots.models);
+        renderReady : function(){
+          // Marks plot models as "ready" for rendering
           var models = this.plots.models;
           for (var i = 0; i < models.length; i++){
             this.plots.models[i].set("ready", true);

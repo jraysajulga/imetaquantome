@@ -6,13 +6,22 @@ define([''],
 
         initialize: function(config){
             this.model = config.model;
-            //$()
-            this.$el.html(this.dropdown("Label: "));
-            this.$el.append(this.dropdown("X: "));
-            this.$el.append(this.dropdown("Y: "));
+            this.dropdown_label = null;
+            this.addDropdowns();
         },
 
-        dropdown : function(text){
+        addDropdowns : function(){
+            var values = this.model.get("values");
+            for (value in values){
+                this.$el.append(this.dropdown(value, values[value]));
+            }
+        },
+
+        updateLabel : function(){
+            console.log("Updating label");
+        },
+
+        dropdown : function(label, value){
             var dropdown = $("<div>", {class : "option-dropdown"})
             var dropdown_content = $("<div>", {class : "option-dropdown-content"})
 
@@ -32,7 +41,7 @@ define([''],
 
             var dropdown_header = $("<div>",
                 {class : "option-header",
-                 text : text});
+                 text : label});
             var dropdown_button = $("<button>", 
                 {class : "option-dropbtn",
                  text : "▼",
@@ -41,9 +50,10 @@ define([''],
                         .find(".option-dropdown-content");
                     content.toggle("show");
                 }});
-            var dropdown_label = $("<div>",
-                {class : "option-label"});
-            dropdown_header.append(dropdown_label);
+            this.dropdown_label = $("<div>",
+                {class : "option-label",
+                 text : value});
+            dropdown_header.append(this.dropdown_label);
             dropdown_header.append(dropdown_button);
 
             // Iterate through dataset's headers and place within dropdown.
@@ -54,7 +64,7 @@ define([''],
                                         text : columns[i],
                                         click : function(){
                                             console.log($( this ).html());
-                                            
+
                                             //console.log($(this).parent().parent().find(".option-header").find(".option-label").html($( this ).html()));
                                         }}));
             }

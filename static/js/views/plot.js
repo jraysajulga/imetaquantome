@@ -33,10 +33,10 @@ define(["views/options"],
         },
 
         renderBarChart : function(){
-            var label = this.data[this.values.label];
-            var group_1 = this.data[this.values.group_1];
-            var group_2 = this.data[this.values.group_2];
-
+            var label = this.data[this.values["Label"]];
+            var group_1 = this.data[this.values["Group 1"]];
+            var group_2 = this.data[this.values["Group 2"]];
+            
             group_1 = group_1.map(function(e) {e = 2**e; return e; })
             group_2 = group_2.map(function(e) {e = 2**e; return e; })
 
