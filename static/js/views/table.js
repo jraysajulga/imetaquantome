@@ -27,12 +27,16 @@ define([''],
             var highlights = this.plots.pluck("values");
             var highlight_plot;
             var index;
-            $(this.table.cells().nodes()).removeClass("selected");
+            var colors = this.model.get("colors"); 
+            console.log(highlights);
+            console.log(colors);
+            $(this.table.cells().nodes()).css("background-color", "white");
             for (var i = 0; i < highlights.length; i++){
                 highlight_plot = highlights[i];
                 for (key in highlight_plot) {
                     index = this.headers.indexOf(highlight_plot[key])
-                    $(this.table.column(index).nodes()).addClass("selected");
+                    console.log(key)
+                    $(this.table.column(index).nodes()).css("background-color", colors[key][0].split(";")[0]);
                 }
             }
         },
