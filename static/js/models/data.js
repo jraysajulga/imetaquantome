@@ -12,7 +12,10 @@ define([''],
                              "WS": ["X737WS", "X852WS", "X867WS"]},
             label_types : {"Group 1" : ["float", "int"],
                            "Group 2" : ["float", "int"],
-                            "Label"  : "str"}
+                            "Label"  : ["str"]},
+            colors : {"Label" : ["#cccccc"],
+                      "Group 1" : ["#0066ff; color : white"],
+                      "Group 2" : ["#ff9933"]}
         },
 
         initialize: function(config){

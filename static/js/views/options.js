@@ -9,6 +9,7 @@ define([''],
             this.headers = config.dataModel.get("headers");
             this.label_types = config.dataModel.get("label_types");
             this.column_types = config.dataModel.column_types;
+            this.colors = config.dataModel.get("colors");
             this.addDropdowns();
             this.clearDropdownsListener();
             this.model.on("change:values change:type", this.addDropdowns, this);
@@ -37,8 +38,19 @@ define([''],
             }
         },
 
+        determineColor : function(label){
+            var values = this.model.get("values");
+            if (label == "Type"){
+                return "#f2f2f2"
+            } else {
+                return this.colors[label];
+            }
+        },
+
         dropdown : function(label, value){
-            var dropdown = $("<div>", {class : "option-dropdown"})
+            var dropdown = $("<div>", {class : "option-dropdown",
+                                       style : "background-color : " 
+                                       + this.determineColor(label)})
             var dropdown_content = $("<div>", {class : "option-dropdown-content"})
 
             var dropdown_header = $("<div>",
@@ -60,7 +72,7 @@ define([''],
 
             // Iterate through dataset's headers and place within dropdown.
             var view = this;
-            var options = label == "Type" ? ["Heat Map", "Bar Chart"] : this.headers;
+            var options = label == "Type" ? ["Heat Map", "Bar Chart", "Sankey"] : this.headers;
             for (var i = 0; i < options.length; i++){
                 if (label == "Type" || (label != "Type" && this.label_types[label].includes(this.column_types[i]))){
                     dropdown_content.append($("<a>", {
