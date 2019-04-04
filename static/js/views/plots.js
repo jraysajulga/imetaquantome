@@ -12,7 +12,7 @@ define(["collections/plots", "models/plot", "views/plot"],
               view.addPlot();
             });
             this.plots.add(new PlotDatum({values : this.surmiseDefaultValues(),
-                                             type : "barchart"}));
+                                             type : "Bar Chart"}));
             //this.plots.add({plot : new PlotDatum({values : this.surmiseDefaultValues(),
               //                               type : "heatmap"})});
             //this.plots.add({testModel : "Test"});

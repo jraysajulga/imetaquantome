@@ -8,22 +8,47 @@ define(["views/options"],
             this.id = this.model.cid;
             this.model = config.model;
             this.data = config.dataModel.get("data");
-
-            this.type = this.model.get("type");
+            this.headers = config.dataModel.get("headers");
 
             // Adds options table and chart divs
             this.$el.html(new OptionTable({model : this.model,
                                            headers : config.dataModel.get("headers")}).el);
             this.$el.append($("<div>", {id : this.id + "-plotly"}));
             
-            this.model.on("change:ready", this.render, this);
-            this.model.on("change:values", this.render, this);
+            this.model.on("change:ready change:values change:type", this.render, this);
         },
 
         render : function(){
-          if (this.type == "barchart"){
+          var type = this.model.get("type");
+          this.surmiseDefaultValues();
+          if (type == "Bar Chart"){
             this.renderBarChart();
+          } else if (type == "Heat Map"){
+            console.log("HEAT MAP");
+            this.renderHeatMap();
           }
+        },
+
+        surmiseDefaultValues : function(){
+          var type = this.model.get("type");
+          var header;
+          var values = {};
+          for (var i = 0; i < this.headers.length; i++){
+            header = this.headers[i];
+            if (header.includes("_mean") && (!values["Group 1"] || !values["Group 2"])){
+              if (values["Group 1"]){
+                values["Group 2"] = header;
+              } else{
+                values["Group 1"] = header;
+              }
+            }
+            if (type == "Bar Chart"){
+              if (header.includes("taxon")){
+                values["Label"] = header;
+              }
+            } 
+          }
+          this.model.set("values", values);
         },
 
         renderBarChart : function(){
@@ -55,5 +80,7 @@ define(["views/options"],
           Plotly.newPlot(this.id + "-plotly", data, layout);
         },
 
+        renderHeatMap : function(){
+        }
     });
 });
