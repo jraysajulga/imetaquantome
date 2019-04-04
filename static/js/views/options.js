@@ -6,7 +6,9 @@ define([''],
 
         initialize: function(config){
             this.model = config.model;
-            this.headers = config.headers;
+            this.headers = config.dataModel.get("headers");
+            this.label_types = config.dataModel.get("label_types");
+            this.column_types = config.dataModel.column_types;
             this.addDropdowns();
             this.clearDropdownsListener();
             this.model.on("change:values change:type", this.addDropdowns, this);
@@ -60,18 +62,20 @@ define([''],
             var view = this;
             var options = label == "Type" ? ["Heat Map", "Bar Chart"] : this.headers;
             for (var i = 0; i < options.length; i++){
-                dropdown_content.append($("<a>", {
-                                        text : options[i],
-                                        class : value == options[i] ? "selected" : null,
-                                        click : function(){
-                                            if (label == "Type") {
-                                                view.model.set("type", $(this).html());
-                                            } else {
-                                                var values = _.clone(view.model.get("values"));
-                                                values[label] = $(this).html();
-                                                view.model.set("values", values);
-                                            }
-                                        }}));
+                if (label == "Type" || (label != "Type" && this.label_types[label].includes(this.column_types[i]))){
+                    dropdown_content.append($("<a>", {
+                                            text : options[i],
+                                            class : value == options[i] ? "selected" : null,
+                                            click : function(){
+                                                if (label == "Type") {
+                                                    view.model.set("type", $(this).html());
+                                                } else {
+                                                    var values = _.clone(view.model.get("values"));
+                                                    values[label] = $(this).html();
+                                                    view.model.set("values", values);
+                                                }
+                                            }}));
+                }
             }
             dropdown.append(dropdown_header);
             dropdown.append(dropdown_content);

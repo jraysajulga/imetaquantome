@@ -77,7 +77,7 @@
     $(function() {
         require( [ 'app' ], function( App ) {
             var app = new App({dataset_id : '${hdadict["id"]}',
-                                column_types : "${[x.encode('utf-8') for x in hdadict['metadata_column_types']]}"});
+                                column_types : ${[x.encode('utf-8') for x in hdadict['metadata_column_types']]}});
             $('body').append(app.$el);
         });
     });

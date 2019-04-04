@@ -9,11 +9,12 @@ define(["views/options"],
             this.model = config.model;
             this.data = config.dataModel.get("data");
             this.headers = config.dataModel.get("headers");
+
             this.surmiseDefaultValues();
 
             // Adds options table and chart divs
             this.$el.html(new OptionTable({model : this.model,
-                                           headers : config.dataModel.get("headers")}).el);
+                                           dataModel : config.dataModel}).el);
             this.$el.append($("<div>", {id : this.id + "-plotly"}));
             
             this.model.on("change:ready change:values change:type", this.render, this);

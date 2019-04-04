@@ -9,11 +9,15 @@ define([''],
             data : [],
             charts : {},
             sampCols : {"NS": ["X737NS", "X852NS", "X867NS"],
-                             "WS": ["X737WS", "X852WS", "X867WS"]}
+                             "WS": ["X737WS", "X852WS", "X867WS"]},
+            label_types : {"Group 1" : ["float", "int"],
+                           "Group 2" : ["float", "int"],
+                            "Label"  : "str"}
         },
 
         initialize: function(config){
             this.dataset_id = config.dataset_id;
+            this.column_types = config.column_types;
             this.loadDataset();
         },
 
