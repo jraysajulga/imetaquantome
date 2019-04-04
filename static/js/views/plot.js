@@ -9,6 +9,7 @@ define(["views/options"],
             this.model = config.model;
             this.data = config.dataModel.get("data");
             this.headers = config.dataModel.get("headers");
+            this.surmiseDefaultValues();
 
             // Adds options table and chart divs
             this.$el.html(new OptionTable({model : this.model,

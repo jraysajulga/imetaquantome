@@ -11,21 +11,11 @@ define(["collections/plots", "models/plot", "views/plot"],
             this.plots.bind("add", function(){
               view.addPlot();
             });
-            this.plots.add(new PlotDatum({values : this.surmiseDefaultValues(),
-                                             type : "Bar Chart"}));
+            this.plots.add(new PlotDatum({type : "Bar Chart"}));
             //this.plots.add({plot : new PlotDatum({values : this.surmiseDefaultValues(),
               //                               type : "heatmap"})});
             //this.plots.add({testModel : "Test"});
             //console.log(this.plots);
-        },
-
-        surmiseDefaultValues : function(){
-          var headers = this.model.get("headers");
-          if (headers.includes("taxon_name") && headers.includes("NS_mean")){
-            return {"Label" : "taxon_name", "Group 1" : "NS_mean", "Group 2" : "WS_mean"}
-          } else {
-            return false
-          }
         },
 
         addPlot : function(){
