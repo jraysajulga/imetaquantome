@@ -21,7 +21,9 @@ define(["views/options"],
 
         render : function(){
           var type = this.model.get("type");
-          this.surmiseDefaultValues();
+          if (this.model.changed.type){
+            this.surmiseDefaultValues();
+          };
           if (type == "Bar Chart"){
             this.renderBarChart();
           } else if (type == "Heat Map"){
