@@ -7,8 +7,9 @@ define(["views/options"],
         initialize: function(config){
             this.id = this.model.cid;
             this.model = config.model;
-            this.data = config.dataModel.get("data");
-            this.headers = config.dataModel.get("headers");
+            this.dataModel = config.dataModel;
+            this.data = this.dataModel.get("data");
+            this.headers = this.dataModel.get("headers");
 
             this.surmiseDefaultValues();
 
@@ -29,8 +30,14 @@ define(["views/options"],
             this.renderBarChart();
           } else if (type == "Heat Map"){
             console.log("HEAT MAP");
+            console.log(this.dataModel.get("samplesFiles"));
+            this.generateValuesFromSamplesFiles()
             this.renderHeatMap();
           }
+        },
+
+        generateValuesFromSamplesFiles : function(){
+
         },
 
         surmiseDefaultValues : function(){

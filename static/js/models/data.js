@@ -17,13 +17,16 @@ define([''],
             colors : {"Label" : ["#cccccc"],
                       "Group 1" : ["#0066ff; color : white"],
                       "Group 2" : ["#ff9933"]},
-            samplesFiles : {}
+            samplesFiles : {},
+            loadingSamplesFiles : true
         },
 
         initialize: function(config){
             this.dataset_id = config.dataset_id;
             this.history_id = config.history_id;
             this.column_types = config.column_types;
+            this.num_samplesFiles = 0;
+            this.num_checkedDatasets = 0;
             this.loadDataset();
             this.loadHistory();
         },
@@ -69,8 +72,10 @@ define([''],
             var model = this;
             xhr.done(function(response){
                 var datasets = response.state_ids.ok;
+                model.num_samplesFiles = datasets.length;
                 for (var i = 0; i < datasets.length; i++){
                     model.getSampleFileIDs(datasets[i]);
+                    console.log("YOGA");
                 }
             });
         },
@@ -82,7 +87,11 @@ define([''],
                 if (response.peek && response.name){
                     if (response.peek.includes("colnames") && response.name.includes("create samples")){
                         model.setSampleFiles(response.dataset_id, response.name);
+                    } else {
+                        model.num_checkedDatasets++;
                     }
+                } else {
+                    model.num_checkedDatasets++;
                 }
             });
         },
@@ -97,6 +106,10 @@ define([''],
                 response.data.shift();
                 samplesFiles[name] = response.data;
                 model.set("samplesFiles", samplesFiles);
+                model.num_checkedDatasets++;
+                if (model.num_checkedDatasets == model.num_samplesFiles){
+                    model.set("loadingSamplesFiles", false);
+                }
             });
         }
     });

@@ -14,6 +14,7 @@ define([''],
             this.addDropdowns();
             this.clearDropdownsListener();
             this.model.on("change:values change:type", this.addDropdowns, this);
+            //this.dataModel.on("change:samplesFiles", )
         },
 
         addDropdowns : function(){
