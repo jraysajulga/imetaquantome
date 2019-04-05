@@ -13,6 +13,15 @@ define([''],
             this.dataset_id = config.dataset_id;
             this.headers = this.model.get("headers");
             this.plots.on("change", this.addListener, this);
+            this.model.on("change:highlighted", this.highlightColumn, this);
+        },
+
+        highlightColumn : function(){
+            var index = this.headers.indexOf((this.model.get("highlighted")));
+            $(this.table.cells().nodes()).css("border-left", "1px solid white");
+            $(this.table.cells().nodes()).css("border-right", "1px solid white");
+            $(this.table.column(index).nodes()).css("border-left", "1px dashed black");
+            $(this.table.column(index).nodes()).css("border-right", "1px dashed black");
         },
 
         addListener : function(){
@@ -33,7 +42,7 @@ define([''],
                 highlight_plot = highlights[i];
                 for (key in highlight_plot) {
                     index = this.headers.indexOf(highlight_plot[key])
-                    $(this.table.column(index).nodes()).css("background-color", this.adjustColor(colors[key][0].split(";")[0], 30));
+                    $(this.table.column(index).nodes()).css("background-color", this.adjustColor(colors[key][0].split(";")[0], 15));
                 }
             }
         },

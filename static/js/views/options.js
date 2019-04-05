@@ -6,10 +6,11 @@ define([''],
 
         initialize: function(config){
             this.model = config.model;
-            this.headers = config.dataModel.get("headers");
-            this.label_types = config.dataModel.get("label_types");
-            this.column_types = config.dataModel.column_types;
-            this.colors = config.dataModel.get("colors");
+            this.dataModel = config.dataModel;
+            this.headers = this.dataModel.get("headers");
+            this.label_types = this.dataModel.get("label_types");
+            this.column_types = this.dataModel.column_types;
+            this.colors = this.dataModel.get("colors");
             this.addDropdowns();
             this.clearDropdownsListener();
             this.model.on("change:values change:type", this.addDropdowns, this);
@@ -78,6 +79,12 @@ define([''],
                     dropdown_content.append($("<a>", {
                                             text : options[i],
                                             class : value == options[i] ? "selected" : null,
+                                            mouseenter : function(){
+                                                view.dataModel.set("highlighted", $(this).html());
+                                            },
+                                            mouseleave : function(){
+                                                view.dataModel.set("highlighted", null);
+                                            },
                                             click : function(){
                                                 if (label == "Type") {
                                                     view.model.set("type", $(this).html());
