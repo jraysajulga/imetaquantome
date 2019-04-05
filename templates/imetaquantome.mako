@@ -76,7 +76,8 @@
             });
     $(function() {
         require( [ 'app' ], function( App ) {
-            var app = new App({dataset_id : '${hdadict["id"]}',
+            var app = new App({dataset_id : "${hdadict['id']}",
+                                history_id : "${hdadict['history_id']}",
                                 column_types : ${[x.encode('utf-8') for x in hdadict['metadata_column_types']]}});
             $('body').append(app.$el);
         });

@@ -16,13 +16,16 @@ define([''],
                             "Label"  : ["str"]},
             colors : {"Label" : ["#cccccc"],
                       "Group 1" : ["#0066ff; color : white"],
-                      "Group 2" : ["#ff9933"]}
+                      "Group 2" : ["#ff9933"]},
+            samplesFiles : {}
         },
 
         initialize: function(config){
             this.dataset_id = config.dataset_id;
+            this.history_id = config.history_id;
             this.column_types = config.column_types;
             this.loadDataset();
+            this.loadHistory();
         },
 
         // Reformats a table array to a dictionary, using the first row
@@ -57,7 +60,44 @@ define([''],
                 model.set("headers", data.shift());
                 model.set("data", model.array2dict(data));
             });
-        }
+        },
 
+        loadHistory : function(){
+            var xhr = jQuery.getJSON('/api/histories/' + this.history_id);
+            // Once retrieved, sets data and headers to model...
+            // Will trigger any .on listeners
+            var model = this;
+            xhr.done(function(response){
+                var datasets = response.state_ids.ok;
+                for (var i = 0; i < datasets.length; i++){
+                    model.getSampleFileIDs(datasets[i]);
+                }
+            });
+        },
+
+        getSampleFileIDs : function(id){
+            var xhr = jQuery.getJSON("/api/datasets/" + id);
+            var model = this;
+            xhr.done(function(response){
+                if (response.peek && response.name){
+                    if (response.peek.includes("colnames") && response.name.includes("create samples")){
+                        model.setSampleFiles(response.dataset_id, response.name);
+                    }
+                }
+            });
+        },
+
+        setSampleFiles : function(id, name){
+            var xhr = jQuery.getJSON("/api/datasets/" + id, {
+                            data_type : "raw_data",
+                            provider : "column"});
+            var model = this;
+            xhr.done(function(response){
+                var samplesFiles = _.clone(model.get("samplesFiles"));
+                response.data.shift();
+                samplesFiles[name] = response.data;
+                model.set("samplesFiles", samplesFiles);
+            });
+        }
     });
 });

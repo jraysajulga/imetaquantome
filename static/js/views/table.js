@@ -10,7 +10,7 @@ define([''],
             this.table = null;
             this.model = config.model;
             this.plots = config.plots;
-            this.dataset_id = config.dataset_id;
+            this.dataset_id = config.model.dataset_id;
             this.headers = this.model.get("headers");
             this.plots.on("change", this.addListener, this);
             this.model.on("change:highlighted", this.highlightColumn, this);

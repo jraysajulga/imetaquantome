@@ -9,7 +9,6 @@ define(["views/volcanoPlot", "views/table", "models/data", "views/heatmap", "vie
 
         initialize: function(config){
             this.model = new Dataset(config);
-            this.dataset_id = config.dataset_id;
             var view = this;
             this.model.on("change:data", function(){ view.render() });
         },
@@ -19,8 +18,7 @@ define(["views/volcanoPlot", "views/table", "models/data", "views/heatmap", "vie
             var plots = new PlotData();
 
             // Datatable
-            var table = new dataTable({dataset_id : this.dataset_id,
-                                        model : this.model,
+            var table = new dataTable({model : this.model,
                                         plots : plots});
             this.$el.append(table.el);
             table.render();
