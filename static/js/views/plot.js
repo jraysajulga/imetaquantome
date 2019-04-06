@@ -11,7 +11,7 @@ define(["views/options"],
             this.data = this.dataModel.get("data");
             this.headers = this.dataModel.get("headers");
 
-            this.surmiseDefaultValues();
+            this.model.surmiseDefaultValues();
 
             // Adds options table and chart divs
             this.$el.html(new OptionTable({model : this.model,
@@ -25,46 +25,15 @@ define(["views/options"],
         render : function(){
           var type = this.model.get("type");
           if (this.model.changed.type){
-            this.surmiseDefaultValues();
+            this.model.surmiseDefaultValues();
           };
           if (type == "Bar Chart"){
             this.renderBarChart();
           } else if (type == "Heat Map"){
             console.log("HEAT MAP");
-            this.generateValuesFromSamplesFiles()
+            //this.generateValuesFromSamplesFiles()
             this.renderHeatMap();
           }
-        },
-
-        generateValuesFromSamplesFiles : function(){
-          console.log(this.dataModel.get("loadingSamplesFiles"));
-          var samples = this.dataModel.get("samplesFiles");
-          console.log(samples);
-          for (sample in samples){
-            console.log(sample);
-          }
-        },
-
-        surmiseDefaultValues : function(){
-          var type = this.model.get("type");
-          var header;
-          var values = {};
-          for (var i = 0; i < this.headers.length; i++){
-            header = this.headers[i];
-            if (header.includes("_mean") && (!values["Group 1"] || !values["Group 2"])){
-              if (values["Group 1"]){
-                values["Group 2"] = header;
-              } else{
-                values["Group 1"] = header;
-              }
-            }
-            if (type == "Bar Chart"){
-              if (header.includes("taxon")){
-                values["Label"] = header;
-              }
-            } 
-          }
-          this.model.set("values", values);
         },
 
         renderBarChart : function(){

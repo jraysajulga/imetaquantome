@@ -1,5 +1,5 @@
 define(["collections/plots", "models/plot", "views/plot"],
-    function(PlotData, PlotDatum, PlotView) {
+    function(PlotData, PlotModel, PlotView) {
     return Backbone.View.extend({
 
         className : "visualizations",
@@ -11,7 +11,8 @@ define(["collections/plots", "models/plot", "views/plot"],
             this.plots.bind("add", function(){
               view.addPlot();
             });
-            this.plots.add(new PlotDatum({type : "Bar Chart"}));
+            this.plots.add(new PlotModel({type : "Bar Chart",
+                                          dataModel : this.model}));
             //this.plots.add({plot : new PlotDatum({values : this.surmiseDefaultValues(),
               //                               type : "heatmap"})});
             //this.plots.add({testModel : "Test"});
