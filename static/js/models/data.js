@@ -75,7 +75,6 @@ define([''],
                 model.num_samplesFiles = datasets.length;
                 for (var i = 0; i < datasets.length; i++){
                     model.getSampleFileIDs(datasets[i]);
-                    console.log("YOGA");
                 }
             });
         },
@@ -104,10 +103,19 @@ define([''],
             xhr.done(function(response){
                 var samplesFiles = _.clone(model.get("samplesFiles"));
                 response.data.shift();
+                var i = 1;
+                while (name in samplesFiles){
+                    i++;
+                    if (i > 2){
+                        name = name.slice(0,-4);
+                    }
+                    name = name + " (" + i + ")";
+                }
                 samplesFiles[name] = response.data;
                 model.set("samplesFiles", samplesFiles);
                 model.num_checkedDatasets++;
                 if (model.num_checkedDatasets == model.num_samplesFiles){
+                    console.log("DONE!");
                     model.set("loadingSamplesFiles", false);
                 }
             });

@@ -19,6 +19,7 @@ define(["views/options"],
             this.$el.append($("<div>", {id : this.id + "-plotly"}));
             
             this.model.on("change:ready change:values change:type", this.render, this);
+            this.dataModel.on("change:loadingSamplesFiles", this.render, this);
         },
 
         render : function(){
@@ -30,14 +31,18 @@ define(["views/options"],
             this.renderBarChart();
           } else if (type == "Heat Map"){
             console.log("HEAT MAP");
-            console.log(this.dataModel.get("samplesFiles"));
             this.generateValuesFromSamplesFiles()
             this.renderHeatMap();
           }
         },
 
         generateValuesFromSamplesFiles : function(){
-
+          console.log(this.dataModel.get("loadingSamplesFiles"));
+          var samples = this.dataModel.get("samplesFiles");
+          console.log(samples);
+          for (sample in samples){
+            console.log(sample);
+          }
         },
 
         surmiseDefaultValues : function(){
