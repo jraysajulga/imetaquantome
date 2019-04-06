@@ -6,38 +6,39 @@ define(["views/options"],
 
         initialize: function(config){
             this.id = this.model.cid;
-            this.model = config.model;
+            this.plot_model = config.model;
             this.dataModel = config.dataModel;
             this.data = this.dataModel.get("data");
             this.headers = this.dataModel.get("headers");
 
-            this.model.surmiseDefaultValues();
+            this.plot_model.surmiseDefaultValues();
 
             // Adds options table and chart divs
-            this.$el.html(new OptionTable({model : this.model,
+            this.$el.html(new OptionTable({model : this.plot_model,
                                            dataModel : config.dataModel}).el);
             this.$el.append($("<div>", {id : this.id + "-plotly"}));
             
-            this.model.on("change:ready change:values change:type", this.render, this);
-            this.dataModel.on("change:loadingSamplesFiles", this.render, this);
+            this.plot_model.on("change:ready change:values change:type", this.render, this);
+            //this.dataModel.on("change:loadingSamplesFiles", this.render, this);
         },
 
         render : function(){
-          var type = this.model.get("type");
-          if (this.model.changed.type){
-            this.model.surmiseDefaultValues();
+          var type = this.plot_model.get("type");
+          if (this.plot_model.changed.type){
+            console.log("HELLO");
+            this.plot_model.surmiseDefaultValues();
           };
           if (type == "Bar Chart"){
             this.renderBarChart();
           } else if (type == "Heat Map"){
             console.log("HEAT MAP");
-            //this.generateValuesFromSamplesFiles()
+            //this.plot_model.generateValuesFromSamplesFiles()
             this.renderHeatMap();
           }
         },
 
         renderBarChart : function(){
-          var values = this.model.get("values");
+          var values = this.plot_model.get("values");
           var label = this.data[values["Label"]];
           var group_1 = this.data[values["Group 1"]];
           var group_2 = this.data[values["Group 2"]];

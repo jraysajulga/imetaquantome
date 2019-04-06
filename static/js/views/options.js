@@ -45,7 +45,8 @@ define([''],
             if (label == "Type"){
                 return "#f2f2f2"
             } else {
-                return this.colors[label];
+                //console.log(this.dataModel.get("samplesFiles"));
+                return this.colors[label]
             }
         },
 
@@ -73,33 +74,55 @@ define([''],
             dropdown_header.append(dropdown_label);
 
             // Iterate through dataset's headers and place within dropdown.
+            var type = this.model.get("type");
             var view = this;
             var options = label == "Type" ? ["Heat Map", "Bar Chart", "Sankey"] : this.headers;
             for (var i = 0; i < options.length; i++){
-                if (label == "Type" || (label != "Type" && this.label_types[label].includes(this.column_types[i]))){
-                    dropdown_content.append($("<a>", {
-                                            text : options[i],
-                                            class : value == options[i] ? "selected" : null,
-                                            mouseenter : function(){
-                                                view.dataModel.set("highlighted", $(this).html());
-                                            },
-                                            mouseleave : function(){
-                                                view.dataModel.set("highlighted", null);
-                                            },
-                                            click : function(){
-                                                if (label == "Type") {
-                                                    view.model.set("type", $(this).html());
-                                                } else {
-                                                    var values = _.clone(view.model.get("values"));
-                                                    values[label] = $(this).html();
-                                                    view.model.set("values", values);
-                                                }
-                                            }}));
+                //if (label == "Type" || (label != "Type" && 
+                  //  ((!(label in this.label_types) && this.column_types[i] == "str")))){
+                            //this.label_types[label].includes(this.column_types[i])))){
+                if (label == "Type"){
+                    dropdown_content.append(this.valueOption(label, value, options[i]));
+                } else {
+                    if (type == "Bar Chart" && this.label_types[label].includes(this.column_types[i])){
+                        dropdown_content.append(this.valueOption(label, value, options[i]));
+                    } else if (type == "Heat Map") {
+                        if (label == "Sample File"){
+                            dropdown_content.append(this.valueOption(label, value, options[i]));
+                        } else {
+                            if (["int", "float"].includes(this.column_types[i])){
+                                dropdown_content.append(this.valueOption(label, value, options[i]));
+                            }
+                        }
+                    }
                 }
+                //}
             }
             dropdown.append(dropdown_header);
             dropdown.append(dropdown_content);
             return dropdown
+        },
+
+        valueOption : function(label, value, option){
+            var view = this;
+            return $("<a>", {
+                text : option,
+                class : value == option ? "selected" : null,
+                mouseenter : function(){
+                    view.dataModel.set("highlighted", $(this).html());
+                },
+                mouseleave : function(){
+                    view.dataModel.set("highlighted", null);
+                },
+                click : function(){
+                    if (label == "Type") {
+                        view.model.set("type", $(this).html());
+                    } else {
+                        var values = _.clone(view.model.get("values"));
+                        values[label] = $(this).html();
+                        view.model.set("values", values);
+                    }
+                }})
         },
 
         render : function(){
