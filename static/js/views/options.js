@@ -13,13 +13,16 @@ define([''],
             this.colors = this.dataModel.get("colors");
             this.addDropdowns();
             this.clearDropdownsListener();
-            this.model.on("change:values change:type", this.addDropdowns, this);
+            this.model.on("change:values", this.addDropdowns, this);
             //this.dataModel.on("change:samplesFiles", )
         },
 
         addDropdowns : function(){
             var values = this.model.get("values");
             this.$el.html(this.dropdown("Type", this.model.get("type")))
+            if(this.model.changed.type){
+                this.model.surmiseDefaultValues();
+            }
             for (value in values){
                 this.$el.append(this.dropdown(value, values[value]));
             }

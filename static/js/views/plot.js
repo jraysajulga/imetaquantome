@@ -18,14 +18,14 @@ define(["views/options"],
                                            dataModel : config.dataModel}).el);
             this.$el.append($("<div>", {id : this.id + "-plotly"}));
             
-            this.plot_model.on("change:ready change:values change:type", this.render, this);
+            this.plot_model.on("change:ready change:values", this.render, this);
             //this.dataModel.on("change:loadingSamplesFiles", this.render, this);
         },
 
         render : function(){
           var type = this.plot_model.get("type");
           if (this.plot_model.changed.type){
-            console.log("HELLO");
+            console.log("changing");
             this.plot_model.surmiseDefaultValues();
           };
           if (type == "Bar Chart"){
@@ -67,6 +67,7 @@ define(["views/options"],
         },
 
         renderHeatMap : function(){
+          console.log(this.plot_model.get("valeus"));
         }
     });
 });

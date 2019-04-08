@@ -16,6 +16,7 @@ define([''],
             this.dataModel = config.dataModel;
             this.headers = this.dataModel.get("headers");
             this.set("type", config.type);
+            this.on("change:type", this.surmiseDefaultValues, this);
         },
 
         surmiseDefaultValues : function(){
@@ -47,14 +48,12 @@ define([''],
                         group = groups[i];
                         group_name = group[0];
                         col_names = group[1] ? group[1].split(",") : "";
-                        console.log(col_names);
                         for (var j = 0; j < col_names.length; j++){
                             values[group_name + " " + (j + 1)] = col_names[j];
                         }
                     }
                 }
             }
-            console.log(values);
             this.set("values", values);
         },
 
