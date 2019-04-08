@@ -30,7 +30,7 @@
         <script type="text/javascript" src="static/js/lib/DataTables/datatables.min.js"></script>
         <script src="//d3js.org/d3.v5.min.js"></script>
         <!--<script src="//cdn.rawgit.com/newrelic-forks/d3-plugins-sankey/master/sankey.js"></script> -->
-        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+        <script type="text/javascript" src="https://www.google.com/jsapi?autoload={'modules':[{'name':'visualization','version':'1.1','packages':['sankey']}]}"></script>
 
         ${h.js( 'libs/jquery/select2',
                 'libs/bootstrap-tour',
