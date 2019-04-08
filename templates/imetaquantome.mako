@@ -29,7 +29,7 @@
         <link rel="stylesheet" type="text/css" href="static/js/lib/DataTables/datatables.min.css"/>
         <script type="text/javascript" src="static/js/lib/DataTables/datatables.min.js"></script>
         <script src="//d3js.org/d3.v5.min.js"></script>
-        <script src="//cdn.rawgit.com/newrelic-forks/d3-plugins-sankey/master/sankey.js"></script> 
+        <!--<script src="//cdn.rawgit.com/newrelic-forks/d3-plugins-sankey/master/sankey.js"></script> -->
         <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 
         ${h.js( 'libs/jquery/select2',

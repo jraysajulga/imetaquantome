@@ -94,8 +94,6 @@ define(["views/options"],
         },
 
         renderSankey : function(){
-            google.charts.load("current", {packages:["sankey"]});
-            google.charts.setOnLoadCallback(drawChart);
             var view = this;
             function drawChart() {
               var data = new google.visualization.DataTable();
@@ -120,6 +118,8 @@ define(["views/options"],
               var chart = new google.visualization.Sankey(document.getElementById(view.id + "-plotly"));
               chart.draw(data, options);
             }
+            google.load("visualization", "1", {packages:["sankey"],
+              callback: drawChart});
         }
     });
 });
