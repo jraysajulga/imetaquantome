@@ -24,10 +24,6 @@ define(["views/options"],
 
         render : function(){
           var type = this.plot_model.get("type");
-          if (this.plot_model.changed.type){
-            console.log("changing");
-            this.plot_model.surmiseDefaultValues();
-          };
           if (type == "Bar Chart"){
             this.renderBarChart();
           } else if (type == "Heat Map"){
@@ -67,7 +63,71 @@ define(["views/options"],
         },
 
         renderHeatMap : function(){
-          console.log(this.plot_model.get("valeus"));
+          console.log(this.plot_model.get("values"));
+          var values = this.plot_model.get("values");
+          var data = this.dataModel.get("data");
+          heatmap_data = [];
+          for (value in values){
+            heatmap_data.push(data[values[value]]);
+          }
+
+          var colorScaleValue = [[0,"#FFF7FB"],
+                [1,"#ECE7F2"],
+                [2,"#D0D1E6"],
+                [3,"#A6BDDB"],
+                [4,"#74A9CF"],
+                [5,"#3690C0"],
+                [6,"#0570B0"],
+                [7,"#045A8D"],
+                [9,"#023858"]];
+
+            var plotting_data = [
+                {
+                    x: Object.keys(heatmap_data),
+                    z: this.scale(heatmap_data),
+                    type: 'heatmap',
+                    colorscale: colorScaleValue,
+                    showscale: true
+                }
+            ];
+
+            Plotly.newPlot(this.id + "-plotly", plotting_data);
+
+          
+        },
+
+        scale : function(data){
+            var avg;
+            var sd;
+            var scaled_row;
+            var scaled_data = [];
+            for (var i = 0; i < data[Object.keys(data)[0]].length; i++){
+                row = [];
+                for (el in data){
+                    row.push(parseFloat(data[el][i]));
+                }
+                avg = this.average(row);
+                sd = this.standardDeviation(row);
+                scaled_row = row.map((row) => (row - avg) / sd);
+                scaled_data.push(scaled_row);
+            }
+            return scaled_data;
+        },
+
+        average : function(data){
+          var sum = data.reduce(function(sum, value){
+            return sum + value;
+          }, 0);
+
+          var avg = sum / data.length;
+          return avg;
+        },
+        
+        standardDeviation : function (data) {
+            let m = this.average(data);
+            return Math.sqrt(data.reduce(function (sq, n) {
+                    return sq + Math.pow(n - m, 2);
+                }, 0) / (data.length - 1));
         }
     });
 });

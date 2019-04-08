@@ -30,7 +30,7 @@ define(["views/volcanoPlot", "views/table", "models/data", "views/heatmap", "vie
             visualizations.renderReady();
 
 
-            // Taxonomy heatmap
+            // Taxonomy heatmapdd
             /*var heatMap = new HeatMap({model : this.model});
             this.$el.append(heatMap.el);
             heatMap.render();*/
