@@ -63,10 +63,10 @@ define([''],
                             values["Group 1"] = header;
                         }
                     }
-                    if (header == "name"){
-                        values["Function"] = header;
-                    } else if (header == "taxon_name"){
+                    if (header == "taxon_name"){
                         values["Taxon"] = header;
+                    } else if (header == "name"){
+                        values["Function"] = header;
                     }
                 }
             }

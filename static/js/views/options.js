@@ -88,7 +88,6 @@ define([''],
                 if (label == "Type"){
                     dropdown_content.append(this.valueOption(label, value, options[i]));
                 } else {
-                    console.log(label);
                     if ((type == "Bar Chart" || type=="Sankey") && this.label_types[label].includes(this.column_types[i])){
                         dropdown_content.append(this.valueOption(label, value, options[i]));
                     } else if (type == "Heat Map") {

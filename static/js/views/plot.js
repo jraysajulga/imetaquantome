@@ -98,6 +98,7 @@ define(["views/options"],
 
         renderSankey : function(){
             var view = this;
+            console.log("Rendering sankey");
 
             function drawChart() {
               var values = view.plot_model.get("values");

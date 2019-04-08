@@ -18,10 +18,13 @@ define([''],
 
         highlightColumn : function(){
             var index = this.headers.indexOf((this.model.get("highlighted")));
-            $(this.table.cells().nodes()).css("border-left", "1px solid white");
-            $(this.table.cells().nodes()).css("border-right", "1px solid white");
-            $(this.table.column(index).nodes()).css("border-left", "1px dashed black");
-            $(this.table.column(index).nodes()).css("border-right", "1px dashed black");
+            $(this.table.cells().nodes()).css("border-left", "5px solid white");
+            $(this.table.cells().nodes()).css("border-right", "5px solid white");
+
+            $(this.table.column(index).nodes()).css("border-left", "5px solid #39c3ff");
+            $(this.table.column(index).nodes()).css("border-right", "5px solid #39c3ff");
+            //var width = parseFloat($(this.table.column(index).nodes()).css("width").replace("px",""));
+            //$(this.table.column(index).nodes()).css("width", width - 10 + "px");
         },
 
         addListener : function(){

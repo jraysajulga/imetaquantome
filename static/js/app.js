@@ -1,8 +1,8 @@
 /**
  * Main application class.
  */
-define(["views/volcanoPlot", "views/table", "models/data", "views/heatmap", "views/plots", "collections/plots"],
-    function(volcanoPlot, dataTable, Dataset, HeatMap, Visualizations, PlotData) {
+define(["views/volcanoPlot", "views/table", "models/data", "views/plots", "collections/plots"],
+    function(volcanoPlot, dataTable, Dataset, Visualizations, PlotData) {
     return Backbone.View.extend({
 
         id : "container",
