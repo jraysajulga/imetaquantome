@@ -70,7 +70,6 @@ define([''],
                     }
                 }
             }
-            console.log(values);
             this.set("values", values);
         },
 

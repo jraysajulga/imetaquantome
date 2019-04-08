@@ -109,7 +109,6 @@ define(["views/options"],
                            data[values["Function"]][i],
                            parseFloat(data[values["Group 2"]][i])])
               }
-              console.log(rows);
 
               var data = new google.visualization.DataTable();
               data.addColumn('string', 'From');

@@ -14,6 +14,7 @@ define([''],
             this.addDropdowns();
             this.clearDropdownsListener();
             this.model.on("change:values", this.addDropdowns, this);
+            //this.model.on("change:type")
             //this.dataModel.on("change:samplesFiles", )
         },
 
@@ -87,7 +88,8 @@ define([''],
                 if (label == "Type"){
                     dropdown_content.append(this.valueOption(label, value, options[i]));
                 } else {
-                    if (type == "Bar Chart" && this.label_types[label].includes(this.column_types[i])){
+                    console.log(label);
+                    if ((type == "Bar Chart" || type=="Sankey") && this.label_types[label].includes(this.column_types[i])){
                         dropdown_content.append(this.valueOption(label, value, options[i]));
                     } else if (type == "Heat Map") {
                         if (label == "Sample File"){
