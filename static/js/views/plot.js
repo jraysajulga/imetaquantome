@@ -16,7 +16,8 @@ define(["views/options"],
             // Adds options table and chart divs
             this.$el.html(new OptionTable({model : this.plot_model,
                                            dataModel : config.dataModel}).el);
-            this.$el.append($("<div>", {id : this.id + "-plotly"}));
+            this.$el.append($("<div>", {id : this.id + "-plotly",
+                                        class: "chart-canvas"}));
             
             this.plot_model.on("change:ready change:values", this.render, this);
             //this.dataModel.on("change:loadingSamplesFiles", this.render, this);
@@ -24,6 +25,7 @@ define(["views/options"],
 
         render : function(){
           var type = this.plot_model.get("type");
+          $("#" + this.id + "-plotly").empty();
           if (type == "Bar Chart"){
             this.renderBarChart();
           } else if (type == "Heat Map"){
@@ -34,6 +36,7 @@ define(["views/options"],
         },
 
         renderBarChart : function(){
+
           var values = this.plot_model.get("values");
           var label = this.data[values["Label"]];
           var group_1 = this.data[values["Group 1"]];
@@ -104,7 +107,7 @@ define(["views/options"],
               for (var i = 0; i < data[Object.keys(data)[0]].length; i++){
                 rows.push([data[values["Taxon"]][i],
                            data[values["Function"]][i],
-                           parseFloat(data[values["Group 1"]][i])])
+                           parseFloat(data[values["Group 2"]][i])])
               }
               console.log(rows);
 
