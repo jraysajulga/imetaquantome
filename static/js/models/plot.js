@@ -97,6 +97,40 @@ define([''],
             }
           }
           this.set("values", values);
+        },
+
+        scale : function(data){
+            var avg;
+            var sd;
+            var scaled_row;
+            var scaled_data = [];
+            for (var i = 0; i < data[Object.keys(data)[0]].length; i++){
+                row = [];
+                for (el in data){
+                    row.push(parseFloat(data[el][i]));
+                }
+                avg = this.average(row);
+                sd = this.standardDeviation(row);
+                scaled_row = row.map((row) => (row - avg) / sd);
+                scaled_data.push(scaled_row);
+            }
+            return scaled_data;
+        },
+
+        average : function(data){
+          var sum = data.reduce(function(sum, value){
+            return sum + value;
+          }, 0);
+
+          var avg = sum / data.length;
+          return avg;
+        },
+        
+        standardDeviation : function (data) {
+            let m = this.average(data);
+            return Math.sqrt(data.reduce(function (sq, n) {
+                    return sq + Math.pow(n - m, 2);
+                }, 0) / (data.length - 1));
         }
     });
 });
