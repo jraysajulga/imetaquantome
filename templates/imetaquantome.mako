@@ -20,7 +20,6 @@
         <title>${hda.name | h} | Metaquantome Visualizer</title>
 
         <link rel="stylesheet" href="static/css/index.css">
-        <script src="https://d3js.org/d3.v5.min.js"></script>
 
         <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 
@@ -29,6 +28,9 @@
 
         <link rel="stylesheet" type="text/css" href="static/js/lib/DataTables/datatables.min.css"/>
         <script type="text/javascript" src="static/js/lib/DataTables/datatables.min.js"></script>
+        <script src="//d3js.org/d3.v5.min.js"></script>
+        <script src="//cdn.rawgit.com/newrelic-forks/d3-plugins-sankey/master/sankey.js"></script> 
+        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 
         ${h.js( 'libs/jquery/select2',
                 'libs/bootstrap-tour',

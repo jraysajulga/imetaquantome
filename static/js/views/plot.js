@@ -27,9 +27,9 @@ define(["views/options"],
           if (type == "Bar Chart"){
             this.renderBarChart();
           } else if (type == "Heat Map"){
-            console.log("HEAT MAP");
-            //this.plot_model.generateValuesFromSamplesFiles()
             this.renderHeatMap();
+          } else if (type == "Sankey"){
+            this.renderSankey();
           }
         },
 
@@ -93,6 +93,33 @@ define(["views/options"],
           Plotly.newPlot(this.id + "-plotly", plotting_data);
         },
 
-        
+        renderSankey : function(){
+            google.charts.load("current", {packages:["sankey"]});
+            google.charts.setOnLoadCallback(drawChart);
+            var view = this;
+            function drawChart() {
+              var data = new google.visualization.DataTable();
+              data.addColumn('string', 'From');
+              data.addColumn('string', 'To');
+              data.addColumn('number', 'Weight');
+              data.addRows([
+                [ 'A', 'X', 5 ],
+                [ 'A', 'Y', 7 ],
+                [ 'A', 'Z', 6 ],
+                [ 'B', 'X', 2 ],
+                [ 'B', 'Y', 9 ],
+                [ 'B', 'Z', 4 ]
+              ]);
+
+              // Sets chart options.
+              var options = {
+                width: 600,
+              };
+
+              // Instantiates and draws our chart, passing in some options.
+              var chart = new google.visualization.Sankey(document.getElementById(view.id + "-plotly"));
+              chart.draw(data, options);
+            }
+        }
     });
 });
