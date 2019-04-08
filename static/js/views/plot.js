@@ -63,7 +63,7 @@ define(["views/options"],
         },
 
         renderHeatMap : function(){
-          console.log(this.plot_model.get("values"));
+
           var values = this.plot_model.get("values");
           var data = this.dataModel.get("data");
           heatmap_data = [];
@@ -95,23 +95,29 @@ define(["views/options"],
 
         renderSankey : function(){
             var view = this;
+
             function drawChart() {
+              var values = view.plot_model.get("values");
+              var data = view.dataModel.get("data");
+
+              var rows = [];
+              for (var i = 0; i < data[Object.keys(data)[0]].length; i++){
+                rows.push([data[values["Taxon"]][i],
+                           data[values["Function"]][i],
+                           parseFloat(data[values["Group 1"]][i])])
+              }
+              console.log(rows);
+
               var data = new google.visualization.DataTable();
               data.addColumn('string', 'From');
               data.addColumn('string', 'To');
               data.addColumn('number', 'Weight');
-              data.addRows([
-                [ 'A', 'X', 5 ],
-                [ 'A', 'Y', 7 ],
-                [ 'A', 'Z', 6 ],
-                [ 'B', 'X', 2 ],
-                [ 'B', 'Y', 9 ],
-                [ 'B', 'Z', 4 ]
-              ]);
+              data.addRows(rows);
 
               // Sets chart options.
               var options = {
-                width: 600,
+                width: 800,
+                height: 2000
               };
 
               // Instantiates and draws our chart, passing in some options.

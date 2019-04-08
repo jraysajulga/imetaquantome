@@ -21,9 +21,9 @@ define([''],
 
         surmiseDefaultValues : function(){
             var type = this.get("type");
+            var values = {};
             if (type == "Bar Chart"){
                 var header;
-                var values = {};
                 var headers = this.headers;
                 for (var i = 0; i < headers.length; i++){
                     header = headers[i];
@@ -40,7 +40,6 @@ define([''],
                 }
             } else if (type == "Heat Map"){
                 var samples = this.dataModel.get("samplesFiles");
-                var values = {};
                 // Heat Map defaults
                 for (sample in samples){
                     groups = samples[sample];
@@ -53,7 +52,25 @@ define([''],
                         }
                     }
                 }
+            } else if (type == "Sankey"){
+                var headers = this.headers;
+                for (var i = 0; i < headers.length; i++){
+                    header = headers[i];
+                    if (header.includes("_mean") && (!values["Group 1"] || !values["Group 2"])){
+                        if (values["Group 1"]){
+                            values["Group 2"] = header;
+                        } else{
+                            values["Group 1"] = header;
+                        }
+                    }
+                    if (header == "name"){
+                        values["Function"] = header;
+                    } else if (header == "taxon_name"){
+                        values["Taxon"] = header;
+                    }
+                }
             }
+            console.log(values);
             this.set("values", values);
         },
 

@@ -42,7 +42,9 @@ define([''],
                 highlight_plot = highlights[i];
                 for (key in highlight_plot) {
                     index = this.headers.indexOf(highlight_plot[key])
+                    console.log(key);
                     $(this.table.column(index).nodes()).css("background-color", this.adjustColor(colors[key][0].split(";")[0], 15));
+                    //$(this.table.column(index).nodes()).css("background-color", "grey");
                 }
             }
         },
