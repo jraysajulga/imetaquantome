@@ -36,15 +36,15 @@ define([''],
             var highlights = this.plots.pluck("values");
             var highlight_plot;
             var index;
-            var colors = this.model.get("colors"); 
+            var colors = this.model.get("colors");
+            var color; 
             $(this.table.cells().nodes()).css("background-color", "white");
             for (var i = 0; i < highlights.length; i++){
                 highlight_plot = highlights[i];
                 for (key in highlight_plot) {
-                    index = this.headers.indexOf(highlight_plot[key])
-                    console.log(key);
-                    $(this.table.column(index).nodes()).css("background-color", this.adjustColor(colors[key][0].split(";")[0], 15));
-                    //$(this.table.column(index).nodes()).css("background-color", "grey");
+                    index = this.headers.indexOf(highlight_plot[key]);
+                    color = key in colors ? colors[key][0].split(";")[0] : "#cccccc";
+                    $(this.table.column(index).nodes()).css("background-color", this.adjustColor(color, 15));
                 }
             }
         },
