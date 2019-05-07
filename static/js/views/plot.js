@@ -116,6 +116,7 @@ define(["views/options"],
               data.addColumn('string', 'To');
               data.addColumn('number', 'Weight');
               data.addRows(rows);
+              console.log(rows);
 
               // Sets chart options.
               var options = {
