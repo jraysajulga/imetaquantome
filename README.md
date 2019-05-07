@@ -1,2 +1,4 @@
-# imetaquantome
-A Galaxy visualization plugin developed for plotting data derived from the metaquantome tool. Interactive charts include bar charts, PCA plots, heat maps, etc...
+## imetaquantome
+
+
+Work in progress
